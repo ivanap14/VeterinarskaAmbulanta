@@ -6,4 +6,13 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>ambulanta-client</artifactId>
+  
+  <dependencies>
+    <dependency>
+      <groupId>rs.ac.bg.fon.sa</groupId>
+      <artifactId>ambulanta-common</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  
 </project>
