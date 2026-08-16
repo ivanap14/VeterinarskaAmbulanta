@@ -53,9 +53,15 @@ public class HandleClientThread extends Thread{
         Response response = new Response();
         try {
             switch (request.getOperation()) {
-                case LOGIN:
-                   
-                    break;
+	            case LOGIN:
+	                Veterinarian vet = (Veterinarian) request.getArgument();
+	                vet = Controller.getInstance().login(vet);
+	                if(server.isAlreadyLoggedIn(vet)){
+	                    throw new Exception("Korisnik je već ulogovan!");
+	                }
+	                user=vet;
+	                response.setResult(vet);
+	                break;
                
                 default:
                     throw new AssertionError();

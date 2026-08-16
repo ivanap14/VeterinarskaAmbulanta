@@ -6,4 +6,13 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>ambulanta-common</artifactId>
+  
+  <dependencies>
+	  <dependency>
+	  	<groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter</artifactId>
+	    <scope>test</scope>
+	  </dependency>
+  </dependencies>
+  
 </project>

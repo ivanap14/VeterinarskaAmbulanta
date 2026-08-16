@@ -6,6 +6,9 @@
 package rs.ac.bg.fon.sa.ambulanta.controller;
 
 import rs.ac.bg.fon.ambulanta.domain.*;
+import rs.ac.bg.fon.sa.ambulanta.operation.AbstractSO;
+import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;
+
 import java.util.List;
 
 
@@ -26,6 +29,14 @@ public class Controller {
         }
         return instance;
     }
+
+	public Veterinarian login(Veterinarian vet) throws Exception {
+		AbstractSO operation = new Login();
+        operation.execute(vet);
+        Veterinarian veterinarian = ((Login)operation).getVeterinarian();
+        
+        return veterinarian;
+	}
 
 
     
