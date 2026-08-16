@@ -5,7 +5,7 @@
 package rs.ac.bg.fon.sa.ambulanta.repository.db.impl;
 
 import rs.ac.bg.fon.ambulanta.domain.*;
-import java.sql.Connection;
+
 import java.util.List;
 import rs.ac.bg.fon.sa.ambulanta.repository.db.*;
 import java.sql.*;

@@ -5,7 +5,9 @@
 package rs.ac.bg.fon.ambulanta.domain;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
+
+import java.sql.*;
+
 import java.sql.*;
 
 public interface GenericEntity extends Serializable {
