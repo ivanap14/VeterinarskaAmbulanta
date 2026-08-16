@@ -133,7 +133,25 @@ public class FrmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    	try {
+          
+          Veterinarian vet = new Veterinarian(txtEmail.getText(), new String(txtPassword.getPassword()));
+          
+          vet = Controller.getInstance().login(vet);
+          
+          JOptionPane.showMessageDialog(this, "Korisničko ime i šifra su ispravni.\n"
+                                                          + "Veterinar "+vet.getFirstname()+" "+vet.getLastname()+" ["+vet.getId()+"] je uspešno ulogovan/a!",
+                                                                                                      "Info",JOptionPane.INFORMATION_MESSAGE);
+          
+          Controller.getInstance().setCurrentUser(vet);
+          
+          this.dispose(); //zatvaranje i oslobadjanje memorije
+          new FrmMain().setVisible(true);
+          
+    	} catch (Exception ex) {
+    		JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);
 
+  }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

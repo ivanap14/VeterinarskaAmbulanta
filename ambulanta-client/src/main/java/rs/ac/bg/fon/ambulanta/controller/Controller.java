@@ -50,6 +50,17 @@ public class Controller {
         this.currentUser=vet;
     }
 
+	public Veterinarian login(Veterinarian vet) throws Exception {
+		Request request = new Request(Operation.LOGIN, vet);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (Veterinarian) response.getResult();
+        }else{
+            throw response.getException();
+        } 
+	}
+
 
     
 }
