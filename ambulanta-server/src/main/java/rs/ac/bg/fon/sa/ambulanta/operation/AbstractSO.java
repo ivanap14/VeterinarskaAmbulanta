@@ -28,7 +28,6 @@ public abstract class AbstractSO {
             commitTransaction();
             System.out.println("Uspesno izvrsena operacija!!!");
         } catch (Exception exception) {
-            exception.printStackTrace();
             System.out.println("Neuspesno izvrsena operacija!!!");
             rollbackTransaction();
             throw exception;

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package rs.ac.bg.fon.sa.ambulanta.veterinarian;
+package rs.ac.bg.fon.sa.ambulanta.operation.veterinarian;
 
 import rs.ac.bg.fon.ambulanta.domain.*;
 import java.util.List;
@@ -25,20 +25,6 @@ public class Login extends AbstractSO{
             throw new Exception("Objekat pogresnog tipa.");
         }
         
-        Veterinarian vetToLogin = (Veterinarian) param;
-        
-        if (vetToLogin.getEmail().isEmpty()) {
-            throw new Exception("Nije unet email.");
-        }
-        
-        if (vetToLogin.getPassword().isEmpty()) {
-            throw new Exception("Nije uneta šifra.");
-        }
-        
-        if (!(param instanceof Veterinarian)) {
-            throw new Exception("Objekat pogresnog tipa.");
-        }
-        
     }
 
     @Override
@@ -51,7 +37,7 @@ public class Login extends AbstractSO{
                 return;
             }
         }
-        throw new Exception("Korisničko ime i šifra nisu ispravni!");
+        throw new Exception("Korisničko ime i/ili šifra nisu ispravni!");
         
     }
     

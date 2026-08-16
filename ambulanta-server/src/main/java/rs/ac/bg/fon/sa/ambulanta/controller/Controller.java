@@ -7,7 +7,7 @@ package rs.ac.bg.fon.sa.ambulanta.controller;
 
 import rs.ac.bg.fon.ambulanta.domain.*;
 import rs.ac.bg.fon.sa.ambulanta.operation.AbstractSO;
-import rs.ac.bg.fon.sa.ambulanta.veterinarian.Login;
+import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;
 
 import java.util.List;
 
