@@ -22,6 +22,7 @@ public class FrmLogin extends javax.swing.JFrame {
         try {
             
             initComponents();
+            setIconImage(new javax.swing.ImageIcon(getClass().getResource("/image/logo.png")).getImage());
             
             Socket socket = new Socket("localhost", 9000);
             System.out.println("Klijent se povezao!");

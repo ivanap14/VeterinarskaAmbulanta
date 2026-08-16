@@ -28,6 +28,7 @@ public class FrmMain extends javax.swing.JFrame {
 
         initComponents();
         jLabel1.setIcon(new ImageIcon(getClass().getResource("/image/background1.png")));
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/image/logo.png")).getImage());
         
         veterinarian = Controller.getInstance().getCurrentUser();
         setTitle("PetVet :: " + veterinarian.getFirstname() + " " + veterinarian.getLastname());

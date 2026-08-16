@@ -48,9 +48,9 @@ public class Veterinarian implements GenericEntity{
     }
 
     public Veterinarian(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+          setEmail(email);
+          setPassword(password);
+  }
 
 
     public Long getId() {
@@ -86,26 +86,75 @@ public class Veterinarian implements GenericEntity{
     }
 
     public void setFirstname(String firstname) {
+    	if (firstname == null || firstname.isEmpty()) {
+            throw new IllegalArgumentException("Ime mora biti uneto.");
+        }
+    	if (firstname.length() > 50) {
+            throw new IllegalArgumentException("Ime je predugacko.");
+        }
+    	if (!firstname.matches("\\p{L}+")) {
+            throw new IllegalArgumentException("Ime sme da sadrzi samo slova.");
+        }
         this.firstname = firstname;
     }
 
     public void setLastname(String lastname) {
+    	if (lastname == null || lastname.isEmpty()) {
+            throw new IllegalArgumentException("Prezime mora biti uneto.");
+        }
+        if (lastname.length() > 50) {
+            throw new IllegalArgumentException("Prezime je predugacko.");
+        }
+        if (!lastname.matches("\\p{L}+")) {
+            throw new IllegalArgumentException("Prezime sme da sadrzi samo slova.");
+        }
         this.lastname = lastname;
     }
 
     public void setBirthday(LocalDate birthday) {
+    	if (birthday == null) {
+            throw new IllegalArgumentException("Datum rodjenja mora biti unet.");
+        }
+        if (birthday.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Datum rodjenja ne moze biti u buducnosti.");
+        }
         this.birthday = birthday;
     }
 
     public void setPhone(String phone) {
+    	if(phone == null || phone.isEmpty()){
+            throw new IllegalArgumentException("Nije unet telefon.");
+        }
+    	if(phone.length() < 9 || phone.length() > 10) {
+    		throw new IllegalArgumentException("Telefon mora imati 9 ili 10 cifara");
+    	}
+    	if(!phone.matches("\\d+")) {
+    		throw new IllegalArgumentException("Telefon sme da sadrži samo cifre.");
+    	}
         this.phone = phone;
     }
 
-    public void setEmail(String email) throws Exception {
+    public void setEmail(String email)  {
+        if(email == null || email.isEmpty()){
+            throw new IllegalArgumentException("Nije unet email.");
+        }
+        if(!email.contains("@")) {
+        	throw new IllegalArgumentException("Email nije u ispravnom formatu.");
+        }
+        if(email.length()>60) {
+        	throw new IllegalArgumentException("Email je predugačak.");
+        }
         this.email = email;
     }
 
-    public void setPassword(String password) throws Exception {
+    public void setPassword(String password)  {
+        if(password == null || password.isEmpty()){
+            throw new IllegalArgumentException("Nije uneta sifra.");
+        }
+        
+        if (password.length() < 8 || password.length() > 60) {
+            throw new IllegalArgumentException("Sifra mora imati izmedju 8 i 60 karaktera.");
+        }
         this.password = password;
     }
 
@@ -115,35 +164,28 @@ public class Veterinarian implements GenericEntity{
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Veterinarian other = (Veterinarian) obj;
-        return Objects.equals(this.id, other.id);
-    }
-    
-    
-
-    @Override
     public String getTableName() {
         return "veterinarian";
     }
 
     @Override
+	public int hashCode() {
+		return Objects.hash(email, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Veterinarian other = (Veterinarian) obj;
+		return Objects.equals(email, other.email) && Objects.equals(password, other.password);
+	}
+
+	@Override
     public String getTableAlias() {
         return "";
     }
