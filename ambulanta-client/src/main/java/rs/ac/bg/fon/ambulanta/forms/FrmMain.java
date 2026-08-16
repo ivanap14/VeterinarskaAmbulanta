@@ -6,6 +6,8 @@ package rs.ac.bg.fon.ambulanta.forms;
 
 import rs.ac.bg.fon.ambulanta.controller.*;
 import rs.ac.bg.fon.ambulanta.domain.*;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ambulanta.threads.*;
@@ -25,7 +27,8 @@ public class FrmMain extends javax.swing.JFrame {
         try {
 
         initComponents();
-
+        jLabel1.setIcon(new ImageIcon(getClass().getResource("/image/background1.png")));
+        
         veterinarian = Controller.getInstance().getCurrentUser();
         setTitle("PetVet :: " + veterinarian.getFirstname() + " " + veterinarian.getLastname());
         lblVeterinarian.setText("dr. vet. med. "+veterinarian.getFirstname()+" "+veterinarian.getLastname());
@@ -51,6 +54,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel1.setIcon(null);
         jPanel1 = new javax.swing.JPanel();
         lblTime = new javax.swing.JLabel();
         lblDate = new javax.swing.JLabel();
@@ -65,7 +69,6 @@ public class FrmMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/background1.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));

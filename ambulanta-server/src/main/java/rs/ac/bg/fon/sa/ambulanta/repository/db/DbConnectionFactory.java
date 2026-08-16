@@ -7,7 +7,9 @@ package rs.ac.bg.fon.sa.ambulanta.repository.db;
 
 import rs.ac.bg.fon.sa.ambulanta.constant.*;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,7 +41,17 @@ public class DbConnectionFactory {
             try {
 
                 Properties properties = new Properties();
-                properties.load(new FileInputStream(MyServerConstants.DB_CONFIG_FILE_PATH));
+                
+                try (InputStream input = getClass().getClassLoader()
+                        .getResourceAsStream(MyServerConstants.DB_CONFIG_FILE_PATH)) {
+                    
+                    if (input == null) {
+                        throw new FileNotFoundException("Fajl nije pronadjen u classpath-u: " 
+                                + MyServerConstants.DB_CONFIG_FILE_PATH);
+                    }
+                    
+                    properties.load(input);
+                }
    
                 String url = properties.getProperty(MyServerConstants.DB_CONFIG_URL);
                 String user = properties.getProperty(MyServerConstants.DB_CONFIG_USERNAME);
