@@ -27,6 +27,7 @@ public class FrmMain extends javax.swing.JFrame {
     
     public FrmMain() {
         initComponents();
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/image/logo.png")).getImage());
         setLocationRelativeTo(null);
         setTitle("Server");
         
