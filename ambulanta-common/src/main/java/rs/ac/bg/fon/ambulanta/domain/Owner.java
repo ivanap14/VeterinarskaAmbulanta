@@ -25,16 +25,16 @@ public class Owner implements GenericEntity{
     }
 
     public Owner(Long id, String firstname, String lastname, String jmbg, Boolean loyaltyCard,
-                                                    String phone, String email, String address) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.jmbg = jmbg;
-        this.loyaltyCard = loyaltyCard;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-    }
+            String phone, String email, String address) {
+		setId(id);
+		setFirstname(firstname);
+		setLastname(lastname);
+		setJmbg(jmbg);
+		setLoyaltyCard(loyaltyCard);
+		setPhone(phone);
+		setEmail(email);
+		setAddress(address);
+	}
     
     public Long getId() {
         return id;
@@ -72,31 +72,85 @@ public class Owner implements GenericEntity{
         this.id = id;
     }
 
-    public void setFirstname(String firstname) throws Exception {
+    public void setFirstname(String firstname) {
+        if (firstname == null || firstname.isEmpty()) {
+            throw new IllegalArgumentException("Ime mora biti uneto.");
+        }
+        if (firstname.length() > 50) {
+            throw new IllegalArgumentException("Ime je predugačko.");
+        }
+        if (!firstname.matches("\\p{L}+")) {
+            throw new IllegalArgumentException("Ime sme da sadrži samo slova.");
+        }
         this.firstname = firstname;
     }
 
-    public void setLastname(String lastname) throws Exception {
+    public void setLastname(String lastname) {
+        if (lastname == null || lastname.isEmpty()) {
+            throw new IllegalArgumentException("Prezime mora biti uneto.");
+        }
+        if (lastname.length() > 50) {
+            throw new IllegalArgumentException("Prezime je predugačko.");
+        }
+        if (!lastname.matches("\\p{L}+")) {
+            throw new IllegalArgumentException("Prezime sme da sadrži samo slova.");
+        }
         this.lastname = lastname;
     }
 
-    public void setJmbg(String jmbg) throws Exception {
+    public void setJmbg(String jmbg) {
+        if (jmbg == null || jmbg.isEmpty()) {
+            throw new IllegalArgumentException("JMBG mora biti unet.");
+        }
+        if (jmbg.length() != 13) {
+            throw new IllegalArgumentException("JMBG mora imati tačno 13 cifara.");
+        }
+        if (!jmbg.matches("\\d+")) {
+            throw new IllegalArgumentException("JMBG sme da sadrži samo cifre.");
+        }
         this.jmbg = jmbg;
     }
-    
+
     public void setLoyaltyCard(Boolean loyaltyCard) {
+        if (loyaltyCard == null) {
+            throw new IllegalArgumentException("Podatak o loyalty kartici mora biti unet.");
+        }
         this.loyaltyCard = loyaltyCard;
     }
 
-    public void setPhone(String phone) throws Exception {
+    public void setPhone(String phone) {
+        if (phone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("Telefon mora biti unet.");
+        }
+        if (phone.length() < 9 || phone.length() > 10) {
+            throw new IllegalArgumentException("Telefon mora imati 9 ili 10 cifara");
+        }
+        if (!phone.matches("\\d+")) {
+            throw new IllegalArgumentException("Telefon sme da sadrži samo cifre.");
+        }
         this.phone = phone;
     }
 
-    public void setEmail(String email) throws Exception {
+    public void setEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email mora biti unet.");
+        }
+        if (!email.contains("@")) {
+            throw new IllegalArgumentException("Email nije u ispravnom formatu.");
+        }
+        if (email.length() > 60) {
+            throw new IllegalArgumentException("Email je predugačak.");
+        }
         this.email = email;
     }
 
-    public void setAddress(String address) throws Exception {
+    public void setAddress(String address) {
+        if (address == null || address.isEmpty()) {
+            throw new IllegalArgumentException("Adresa mora biti uneta.");
+        }
+        if (address.length() > 100) {
+            throw new IllegalArgumentException("Adresa je predugačka.");
+        }
         this.address = address;
     }
 

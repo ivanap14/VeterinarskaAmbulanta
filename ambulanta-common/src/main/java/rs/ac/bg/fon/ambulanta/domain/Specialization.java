@@ -21,10 +21,10 @@ public class Specialization implements GenericEntity{
     }
 
     public Specialization(Long id, String name, Category category, String description) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.description = description;
+        setId(id);
+        setName(name);
+        setCategory(category);
+        setDescription(description);
     }
     
     public Long getId() {
@@ -48,14 +48,29 @@ public class Specialization implements GenericEntity{
     }
 
     public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Naziv specijalizacije mora biti unet.");
+        }
+        if (name.length() > 50) {
+            throw new IllegalArgumentException("Naziv specijalizacije je predugačak.");
+        }
         this.name = name;
     }
-    
+
     public void setCategory(Category category) {
+        if (category == null) {
+            throw new IllegalArgumentException("Kategorija mora biti uneta.");
+        }
         this.category = category;
     }
 
     public void setDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Opis mora biti unet.");
+        }
+        if (description.length() > 255) {
+            throw new IllegalArgumentException("Opis je predugačak.");
+        }
         this.description = description;
     }
 

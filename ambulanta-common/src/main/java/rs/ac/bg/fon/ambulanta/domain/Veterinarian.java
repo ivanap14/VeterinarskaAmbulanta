@@ -30,21 +30,21 @@ public class Veterinarian implements GenericEntity{
     public Veterinarian(Long id, String firstname, String lastname, LocalDate birthday, String phone, 
                                                                             String email, String password) {
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthday = birthday;
-        this.phone = phone;
-        this.email = email;
-        this.password = password;
+        setFirstname(firstname);
+        setLastname(lastname);
+        setBirthday(birthday);
+        setPhone(phone);
+        setEmail(email);
+        setPassword(password);
     }
     
     public Veterinarian(Long id, String firstname, String lastname, LocalDate birthday, String phone, String email) {
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.birthday = birthday;
-        this.phone = phone;
-        this.email = email;
+        setFirstname(firstname);
+        setLastname(lastname);
+        setBirthday(birthday);
+        setPhone(phone);
+        setEmail(email);
     }
 
     public Veterinarian(String email, String password) {
@@ -123,7 +123,7 @@ public class Veterinarian implements GenericEntity{
 
     public void setPhone(String phone) {
     	if(phone == null || phone.isEmpty()){
-            throw new IllegalArgumentException("Nije unet telefon.");
+            throw new IllegalArgumentException("Telefon mora biti unet.");
         }
     	if(phone.length() < 9 || phone.length() > 10) {
     		throw new IllegalArgumentException("Telefon mora imati 9 ili 10 cifara");
@@ -136,7 +136,7 @@ public class Veterinarian implements GenericEntity{
 
     public void setEmail(String email)  {
         if(email == null || email.isEmpty()){
-            throw new IllegalArgumentException("Nije unet email.");
+            throw new IllegalArgumentException("Email mora biti unet.");
         }
         if(!email.contains("@")) {
         	throw new IllegalArgumentException("Email nije u ispravnom formatu.");
@@ -149,7 +149,7 @@ public class Veterinarian implements GenericEntity{
 
     public void setPassword(String password)  {
         if(password == null || password.isEmpty()){
-            throw new IllegalArgumentException("Nije uneta sifra.");
+            throw new IllegalArgumentException("Sifra mora biti uneta.");
         }
         
         if (password.length() < 8 || password.length() > 60) {

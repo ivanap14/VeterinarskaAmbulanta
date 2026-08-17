@@ -6,6 +6,7 @@ package rs.ac.bg.fon.ambulanta.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import rs.ac.bg.fon.ambulanta.domain.Owner;
@@ -27,12 +28,12 @@ public class Animal implements GenericEntity{
 
     public Animal(Long id, String name, Species species, int yearOfBirth, 
                                                    Gender gender, Owner owner) {
-        this.id = id;
-        this.name = name;
-        this.species = species;
-        this.yearOfBirth = yearOfBirth;
-        this.gender = gender;
-        this.owner = owner;
+        setId(id);
+        setName(name);
+        setSpecies(species);
+        setYearOfBirth(yearOfBirth);
+        setGender(gender);
+        setOwner(owner);
     }
 
     public Long getId() {
@@ -64,22 +65,49 @@ public class Animal implements GenericEntity{
     }
 
     public void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Ime životinje mora biti uneto.");
+        }
+        if (!name.matches("\\p{L}+")) {
+            throw new IllegalArgumentException("Nadimak sme da sadrzi samo slova.");
+        }
+        if (name.length() > 50) {
+            throw new IllegalArgumentException("Ime životinje je predugačko.");
+        }
         this.name = name;
     }
 
     public void setSpecies(Species species) {
+        if (species == null) {
+            throw new IllegalArgumentException("Vrsta mora biti uneta.");
+        }
         this.species = species;
     }
 
     public void setYearOfBirth(int yearOfBirth) {
+        if (yearOfBirth < 0) {
+            throw new IllegalArgumentException("Godina rođenja mora biti pozitivan broj.");
+        }
+        if (!String.valueOf(yearOfBirth).matches("0|\\d{4}")) {
+            throw new IllegalArgumentException("Godište može biti 0 (ako je nepoznato) ili četvorocifren broj.");
+        }
+        if (yearOfBirth > LocalDate.now().getYear()) {
+            throw new IllegalArgumentException("Godina rođenja ne može biti u budućnosti.");
+        }
         this.yearOfBirth = yearOfBirth;
     }
 
     public void setGender(Gender gender) {
+        if (gender == null) {
+            throw new IllegalArgumentException("Pol mora biti unet.");
+        }
         this.gender = gender;
     }
 
     public void setOwner(Owner owner) {
+        if (owner == null) {
+            throw new IllegalArgumentException("Vlasnik mora biti unet.");
+        }
         this.owner = owner;
     }
 

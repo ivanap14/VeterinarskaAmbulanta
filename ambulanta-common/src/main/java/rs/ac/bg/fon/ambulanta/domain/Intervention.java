@@ -30,30 +30,32 @@ public class Intervention implements GenericEntity{
     }
 
     public Intervention(Long id, LocalDate date, String notes, int discountForLoyalty, 
-                                    int discountForNumberOfServices, double totalAmountWithoutDiscount, 
-                                    double totalAmountWithDiscount, Veterinarian veterinarian, Animal animal) {
-        this.id = id;
-        this.date = date;
-        this.notes = notes;
-        this.discountForLoyalty = discountForLoyalty;
-        this.discountForNumberOfServices = discountForNumberOfServices;
-        this.totalAmountWithoutDiscount = totalAmountWithoutDiscount;
-        this.totalAmountWithDiscount = totalAmountWithDiscount;
-        this.veterinarian = veterinarian;
-        this.animal = animal;
-    }
-    
-    public Intervention(LocalDate date, String notes, int discountForLoyalty, int discountForNumberOfServices, double totalAmountWithoutDiscount, double totalAmountWithDiscount, Veterinarian veterinarian, Animal animal, List<InterventionItem> interventionItems) {
-        this.date = date;
-        this.notes = notes;
-        this.discountForLoyalty = discountForLoyalty;
-        this.discountForNumberOfServices = discountForNumberOfServices;
-        this.totalAmountWithoutDiscount = totalAmountWithoutDiscount;
-        this.totalAmountWithDiscount = totalAmountWithDiscount;
-        this.veterinarian = veterinarian;
-        this.animal = animal;
-        this.interventionItems = interventionItems;
-    }
+            int discountForNumberOfServices, double totalAmountWithoutDiscount, 
+            double totalAmountWithDiscount, Veterinarian veterinarian, Animal animal) {
+		setId(id);
+		setDate(date);
+		setNotes(notes);
+		setDiscountForLoyalty(discountForLoyalty);
+		setDiscountForNumberOfServices(discountForNumberOfServices);
+		setTotalAmountWithoutDiscount(totalAmountWithoutDiscount);
+		setTotalAmountWithDiscount(totalAmountWithDiscount);
+		setVeterinarian(veterinarian);
+		setAnimal(animal);
+	}
+	
+	public Intervention(LocalDate date, String notes, int discountForLoyalty, int discountForNumberOfServices, 
+	            double totalAmountWithoutDiscount, double totalAmountWithDiscount, 
+	            Veterinarian veterinarian, Animal animal, List<InterventionItem> interventionItems) {
+		setDate(date);
+		setNotes(notes);
+		setDiscountForLoyalty(discountForLoyalty);
+		setDiscountForNumberOfServices(discountForNumberOfServices);
+		setTotalAmountWithoutDiscount(totalAmountWithoutDiscount);
+		setTotalAmountWithDiscount(totalAmountWithDiscount);
+		setVeterinarian(veterinarian);
+		setAnimal(animal);
+		setInterventionItems(interventionItems);
+	}
         
     public Long getId() {
         return id;
@@ -100,38 +102,65 @@ public class Intervention implements GenericEntity{
     }
 
     public void setDate(LocalDate date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Datum intervencije mora biti unet.");
+        }
+        if (date.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Datum intervencije ne može biti u budućnosti.");
+        }
         this.date = date;
     }
 
     public void setNotes(String notes) {
+    	 if (notes != null && notes.length() > 255) {
+    	        throw new IllegalArgumentException("Napomena je predugačka.");
+    	    }
         this.notes = notes;
     }
 
     public void setDiscountForLoyalty(int discountForLoyalty) {
+        if (discountForLoyalty < 0 || discountForLoyalty > 100) {
+            throw new IllegalArgumentException("Popust za loyalty karticu mora biti između 0 i 100.");
+        }
         this.discountForLoyalty = discountForLoyalty;
     }
 
     public void setDiscountForNumberOfServices(int discountForNumberOfServices) {
+        if (discountForNumberOfServices < 0 || discountForNumberOfServices > 100) {
+            throw new IllegalArgumentException("Popust za broj usluga mora biti između 0 i 100.");
+        }
         this.discountForNumberOfServices = discountForNumberOfServices;
     }
 
     public void setTotalAmountWithoutDiscount(double totalAmountWithoutDiscount) {
+        if (totalAmountWithoutDiscount < 0) {
+            throw new IllegalArgumentException("Ukupan iznos bez popusta ne može biti negativan.");
+        }
         this.totalAmountWithoutDiscount = totalAmountWithoutDiscount;
     }
 
     public void setTotalAmountWithDiscount(double totalAmountWithDiscount) {
+        if (totalAmountWithDiscount < 0) {
+            throw new IllegalArgumentException("Ukupan iznos sa popustom ne može biti negativan.");
+        }
         this.totalAmountWithDiscount = totalAmountWithDiscount;
     }
 
     public void setVeterinarian(Veterinarian veterinarian) {
+        if (veterinarian == null) {
+            throw new IllegalArgumentException("Veterinar mora biti unet.");
+        }
         this.veterinarian = veterinarian;
     }
 
     public void setAnimal(Animal animal) {
+        if (animal == null) {
+            throw new IllegalArgumentException("Životinja mora biti uneta.");
+        }
         this.animal = animal;
     }
 
-    public void setInterventionItems(List<InterventionItem> interventionItems) throws Exception {
+    public void setInterventionItems(List<InterventionItem> interventionItems) {
         this.interventionItems = interventionItems;
     }
 

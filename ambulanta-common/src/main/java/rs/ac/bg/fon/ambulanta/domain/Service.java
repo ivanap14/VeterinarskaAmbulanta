@@ -21,10 +21,10 @@ public class Service implements GenericEntity{
     }
 
     public Service(Long id, String name, double price, String description) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
+        setId(id);
+        setName(name);
+        setPrice(price);
+        setDescription(description);
     }
     
 
@@ -49,15 +49,29 @@ public class Service implements GenericEntity{
     }
 
     public void setName(String name) {
-        
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Naziv usluge mora biti unet.");
+        }
+        if (name.length() > 50) {
+            throw new IllegalArgumentException("Naziv usluge je predugačak.");
+        }
         this.name = name;
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Cena mora biti pozitivan broj.");
+        }
         this.price = price;
     }
 
     public void setDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("Opis mora biti unet.");
+        }
+        if (description.length() > 255) {
+            throw new IllegalArgumentException("Opis je predugačak.");
+        }
         this.description = description;
     }
 

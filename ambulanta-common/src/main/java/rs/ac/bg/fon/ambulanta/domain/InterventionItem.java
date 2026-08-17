@@ -23,14 +23,14 @@ public class InterventionItem implements GenericEntity{
     }
 
     public InterventionItem(Intervention intervention, int rb, double price, int quantity, 
-                                                            double amount, Service service) {
-        this.intervention = intervention;
-        this.rb = rb;
-        this.price = price;
-        this.quantity = quantity;
-        this.amount = amount;
-        this.service = service;
-    }
+            									double amount, Service service) {
+		setIntervention(intervention);
+		setRb(rb);
+		setPrice(price);
+		setQuantity(quantity);
+		setAmount(amount);
+		setService(service);
+	}
 
     public Intervention getIntervention() {
         return intervention;
@@ -57,26 +57,44 @@ public class InterventionItem implements GenericEntity{
     }
 
     public void setIntervention(Intervention intervention) {
+        if (intervention == null) {
+            throw new IllegalArgumentException("Intervencija mora biti uneta.");
+        }
         this.intervention = intervention;
     }
 
     public void setRb(int rb) {
+        if (rb <= 0) {
+            throw new IllegalArgumentException("Redni broj mora biti pozitivan broj.");
+        }
         this.rb = rb;
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Cena mora biti pozitivan broj.");
+        }
         this.price = price;
     }
 
-    public void setQuantity(int quantity) throws Exception {
+    public void setQuantity(int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Količina mora biti pozitivan broj.");
+        }
         this.quantity = quantity;
     }
 
     public void setAmount(double amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Iznos ne može biti negativan.");
+        }
         this.amount = amount;
     }
 
     public void setService(Service service) {
+        if (service == null) {
+            throw new IllegalArgumentException("Usluga mora biti uneta.");
+        }
         this.service = service;
     }
 

@@ -21,12 +21,12 @@ public class VetSpec implements GenericEntity{
     }
 
     public VetSpec(Veterinarian veterinarian, Specialization specialization, 
-                                                LocalDate graduationDate, String institution) {
-        this.veterinarian = veterinarian;
-        this.specialization = specialization;
-        this.graduationDate = graduationDate;
-        this.institution = institution;
-    }
+            								LocalDate graduationDate, String institution) {
+		setVeterinarian(veterinarian);
+		setSpecialization(specialization);
+		setGraduationDate(graduationDate);
+		setInstitution(institution);
+	}
 
     public Veterinarian getVeterinarian() {
         return veterinarian;
@@ -45,18 +45,36 @@ public class VetSpec implements GenericEntity{
     }
 
     public void setVeterinarian(Veterinarian veterinarian) {
+        if (veterinarian == null) {
+            throw new IllegalArgumentException("Veterinar mora biti unet.");
+        }
         this.veterinarian = veterinarian;
     }
 
     public void setSpecialization(Specialization specialization) {
+        if (specialization == null) {
+            throw new IllegalArgumentException("Specijalizacija mora biti uneta.");
+        }
         this.specialization = specialization;
     }
 
     public void setGraduationDate(LocalDate graduationDate) {
+        if (graduationDate == null) {
+            throw new IllegalArgumentException("Datum diplomiranja mora biti unet.");
+        }
+        if (graduationDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Datum diplomiranja ne može biti u budućnosti.");
+        }
         this.graduationDate = graduationDate;
     }
 
     public void setInstitution(String institution) {
+        if (institution == null || institution.isEmpty()) {
+            throw new IllegalArgumentException("Institucija mora biti uneta.");
+        }
+        if (institution.length() > 100) {
+            throw new IllegalArgumentException("Naziv institucije je predugačak.");
+        }
         this.institution = institution;
     }
 
