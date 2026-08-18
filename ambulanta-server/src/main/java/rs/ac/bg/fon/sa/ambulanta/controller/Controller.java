@@ -5,8 +5,13 @@
  */
 package rs.ac.bg.fon.sa.ambulanta.controller;
 
-import rs.ac.bg.fon.ambulanta.domain.*;
+import rs.ac.bg.fon.sa.ambulanta.domain.*;
 import rs.ac.bg.fon.sa.ambulanta.operation.AbstractSO;
+import rs.ac.bg.fon.sa.ambulanta.operation.animal.GetAllAnimals;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.AddNewIntervention;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.EditIntervention;
+import rs.ac.bg.fon.sa.ambulanta.operation.service.GetAllServices;
+import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.GetAllVeterinarians;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;
 
 import java.util.List;
@@ -38,6 +43,45 @@ public class Controller {
         return veterinarian;
 	}
 
+	public List<Veterinarian> getAllVeterinarians() throws Exception {
+		AbstractSO operation = new GetAllVeterinarians();
+        operation.execute(null);
+        List<Veterinarian> veterinarians = ((GetAllVeterinarians)operation).getVeterinarians();
+        
+        return veterinarians;
+	}
+
+	public List<Animal> getAllAnimals() throws Exception {
+        AbstractSO operation = new GetAllAnimals();
+        operation.execute(null);
+        List<Animal> animals = ((GetAllAnimals)operation).getAnimals();
+        
+        return animals;
+    }
+
+	public List<Service> getAllServices() throws Exception {
+        AbstractSO operation = new GetAllServices();
+        operation.execute(null);
+        List<Service> services = ((GetAllServices)operation).getServices();
+        
+        return services;
+    }
+
+	public Intervention addNewIntervention(Intervention intervention) throws Exception {
+        AbstractSO operation = new AddNewIntervention();
+        operation.execute(intervention);
+        Intervention interv = ((AddNewIntervention)operation).getIntervention();
+        
+        return interv;
+    }
+
+	public Intervention editIntervention(Intervention intervention) throws Exception {
+        AbstractSO operation = new EditIntervention();
+        operation.execute(intervention);
+        Intervention interv = ((EditIntervention)operation).getIntervention();
+        
+        return interv;
+    }
 
     
         
