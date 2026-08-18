@@ -6,6 +6,7 @@ package rs.ac.bg.fon.sa.ambulanta.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  *
@@ -93,12 +94,16 @@ public class Service implements GenericEntity{
 
     @Override
     public String getColumnNamesForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    	return "name, price, description";
     }
 
     @Override
     public String getInsertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(name).append("',")
+          .append(price).append(",")
+          .append("'").append(description).append("'");
+        return sb.toString();
     }
 
 
@@ -114,18 +119,39 @@ public class Service implements GenericEntity{
 
     @Override
     public String setAttributeValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+        sb.append("name='").append(name).append("',")
+          .append("price=").append(price).append(",")
+          .append("description='").append(description).append("'");
+        return sb.toString();
     }
 
     @Override
     public String getQueryCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id=" + id;
     }
 
     @Override
     public void setIdFromRS(Long id) {
-        this.id=id;
+        this.id = id;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Service other = (Service) obj;
+		return Objects.equals(id, other.id);
+	}
     
     
 }

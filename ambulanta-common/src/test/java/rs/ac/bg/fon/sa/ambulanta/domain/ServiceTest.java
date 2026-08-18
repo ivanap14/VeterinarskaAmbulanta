@@ -134,5 +134,50 @@ class ServiceTest {
 		assertEquals("Opis usluge", resultService.getDescription());
 	}
 
+	
+	@Test
+	void testHashCode() {
+	    Service s2 = new Service(1L, "Vakcinacija", 100.0, "Opis usluge");
+	    Service s3 = new Service(2L, "Šišanje", 50.0, "Drugi opis");
+
+	    assertEquals(s1.hashCode(), s2.hashCode());
+	    assertNotEquals(s1.hashCode(), s3.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+	    Service s2 = new Service(1L, "Vakcinacija", 100.0, "Opis usluge");
+	    Service s3 = new Service(2L, "Šišanje", 50.0, "Drugi opis");
+
+	    assertTrue(s1.equals(s2));
+	    assertFalse(s1.equals(s3));
+	}
+
+	@Test
+	void testEqualsNull() {
+	    assertFalse(s1.equals(null));
+	}
+
+	@Test
+	void testEqualsInvalidClass() {
+	    assertFalse(s1.equals(new String()));
+	}
+
+	@Test
+	void testGetInsertValues() {
+	    String expected = "'Vakcinacija',100.0,'Opis usluge'";
+	    assertEquals(expected, s1.getInsertValues());
+	}
+
+	@Test
+	void testSetAttributeValues() {
+	    String expected = "name='Vakcinacija',price=100.0,description='Opis usluge'";
+	    assertEquals(expected, s1.setAttributeValues());
+	}
+
+	@Test
+	void testGetQueryCondition() {
+	    assertEquals("id=1", s1.getQueryCondition());
+	}
 
 }
