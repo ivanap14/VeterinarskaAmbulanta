@@ -9,57 +9,83 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import rs.ac.bg.fon.sa.ambulanta.domain.Veterinarian;
+import rs.ac.bg.fon.sa.ambulanta.repository.db.DbConnectionFactory;
+import rs.ac.bg.fon.sa.ambulanta.repository.db.impl.DbBroker;
 
 public class LoginTest {
 
 	private Login so;
-	private Veterinarian veterinarian, veterinarian2;
-	
-	@BeforeEach
-	public void setUp() throws Exception {
-		so = new Login();
-		veterinarian = new Veterinarian();
-		veterinarian2 = new Veterinarian();
-	}
+    private Veterinarian veterinarian;
+    private DbBroker dbBroker;
+ 
+    @BeforeEach
+    public void setUp() throws Exception {
+        so = new Login();
+        dbBroker = new DbBroker();
+ 
+        veterinarian = new Veterinarian();
+        veterinarian.setFirstname("Marko");
+        veterinarian.setLastname("Markovic");
+        veterinarian.setBirthday(java.time.LocalDate.of(1990, 5, 20));
+        veterinarian.setPhone("0641234567");
+        veterinarian.setEmail("marko@gmail.com");
+        veterinarian.setPassword("sifra123");
+ 
+        // Ubacivanje veterinara u bazu - add() vraca entitet sa popunjenim generisanim id-jem
+        veterinarian = (Veterinarian) dbBroker.add(veterinarian);
+        DbConnectionFactory.getInstance().getConnection().commit();
+    }
+ 
+    @AfterEach
+    public void tearDown() throws Exception {
+        // Brisanje istog veterinara iz baze
+        dbBroker.delete(veterinarian);
+        DbConnectionFactory.getInstance().getConnection().commit();
+ 
+        so = null;
+        veterinarian = null;
+        dbBroker = null;
+    }
+ 
+    @Test
+    public void testPreconditionsNullObject() {
+        assertThrows(Exception.class, () -> so.preconditions(null));
+    }
+ 
+    @Test
+    public void testPreconditionsInvalidObject() {
+        assertThrows(Exception.class, () -> so.preconditions(new String()));
+    }
+ 
+    @Test
+    public void testExecuteOperationValidCredentials() throws Exception {
+        Veterinarian toLogin = new Veterinarian();
+        toLogin.setEmail(veterinarian.getEmail());
+        toLogin.setPassword(veterinarian.getPassword());
+ 
+        so.execute(toLogin);
+ 
+        assertEquals(veterinarian.getEmail(), so.getVeterinarian().getEmail());
+        assertEquals(veterinarian.getPassword(), so.getVeterinarian().getPassword());
+    }
+ 
+    @Test
+    public void testExecuteOperationInvalidEmail() {
+        Veterinarian toLogin = new Veterinarian();
+        toLogin.setEmail("xxxx@xxxxxxxxx");
+        toLogin.setPassword(veterinarian.getPassword());
+ 
+        assertThrows(Exception.class, () -> so.execute(toLogin));
+    }
+ 
+    @Test
+    public void testExecuteOperationInvalidPassword() {
+        Veterinarian toLogin = new Veterinarian();
+        toLogin.setEmail(veterinarian.getEmail());
+        toLogin.setPassword("xxxxxxxx");
+ 
+        assertThrows(Exception.class, () -> so.execute(toLogin));
+    }
 
-	@AfterEach
-	public void tearDown() throws Exception {
-		so = null;
-		veterinarian = null;
-		veterinarian2 = null;
-	}
-
-	@Test
-	public void testPreconditionsNullObject() {
-		assertThrows(java.lang.Exception.class, ()->so.preconditions(null));
-	}
-	
-	@Test
-	public void testPreconditionsInvalidObject() {
-		assertThrows(java.lang.Exception.class, ()->so.preconditions(new String()));
-	}
-	
-
-	@ParameterizedTest(name = "{0}")
-	@CsvSource({
-	    "Pogresna sifra, pera@gmail.com, xxxxxxxx",
-	    "Pogresan email, xxxx@xxxxxxxxx, pera1234",
-	    "Ispravna sifra i email, pera@gmail.com, pera1234",
-	})
-	public void testExecuteOperation(String opis, String email, String password) {
-		veterinarian2.setEmail(email);
-		veterinarian2.setPassword(password);
-		
-		try {
-			
-			so.execute(veterinarian2);
-		
-			assertEquals(email, so.getVeterinarian().getEmail());
-			assertEquals(password, so.getVeterinarian().getPassword());
-		
-		} catch (Exception e) {
-			assertEquals("Korisničko ime i/ili šifra nisu ispravni!", e.getMessage());
-		}
-	}
 
 }

@@ -268,5 +268,30 @@ class VeterinarianTest {
 		assertEquals("sifra123", resultVeterinarian.getPassword());
 	}
 
+	
+	@Test
+	void testGetInsertValues() {
+		String expected = "'Marko','Markovic','1990-05-20','0641234567','marko@gmail.com','sifra123'";
+		assertEquals(expected, v1.getInsertValues());
+	}
+ 
+	@Test
+	void testSetIdFromRS() {
+		v.setIdFromRS(10L);
+		assertEquals(10L, v.getId());
+	}
+ 
+	@Test
+	void testSetAttributeValues() {
+		String expected = "firstname='Marko',lastname='Markovic',birthday='1990-05-20',phone='0641234567',"
+				+ "email='marko@gmail.com',password='sifra123'";
+		assertEquals(expected, v1.setAttributeValues());
+	}
+ 
+	@Test
+	void testGetQueryCondition() {
+		assertEquals("id=1", v1.getQueryCondition());
+	}
+
 
 }

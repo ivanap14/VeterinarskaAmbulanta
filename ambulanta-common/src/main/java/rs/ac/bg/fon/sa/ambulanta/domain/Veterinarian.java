@@ -184,13 +184,22 @@ public class Veterinarian implements GenericEntity{
     
     @Override
     public String getColumnNamesForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "firstname, lastname, birthday, phone, email, password";
     }
+
 
     @Override
     public String getInsertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+        sb.append("'").append(firstname).append("',")
+          .append("'").append(lastname).append("',")
+          .append("'").append(birthday).append("',")
+          .append("'").append(phone).append("',")
+          .append("'").append(email).append("',")
+          .append("'").append(password).append("'");
+        return sb.toString();
     }
+
 
 
     @Override
@@ -207,17 +216,26 @@ public class Veterinarian implements GenericEntity{
 
     @Override
     public String setAttributeValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        StringBuilder sb = new StringBuilder();
+        sb.append("firstname='").append(firstname).append("',")
+          .append("lastname='").append(lastname).append("',")
+          .append("birthday='").append(birthday).append("',")
+          .append("phone='").append(phone).append("',")
+          .append("email='").append(email).append("',")
+          .append("password='").append(password).append("'");
+        return sb.toString();
     }
+
 
     @Override
     public String getQueryCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id=" + id;
     }
     
     @Override
     public void setIdFromRS(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.id = id;
     }
+
     
 }
