@@ -4,9 +4,10 @@
  */
 package rs.ac.bg.fon.sa.ambulanta.model;
 
-import rs.ac.bg.fon.ambulanta.domain.*;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+
+import rs.ac.bg.fon.sa.ambulanta.domain.*;
 
 /**
  *

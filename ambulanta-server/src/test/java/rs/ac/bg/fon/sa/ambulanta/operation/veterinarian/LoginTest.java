@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import rs.ac.bg.fon.ambulanta.domain.Veterinarian;
+import rs.ac.bg.fon.sa.ambulanta.domain.Veterinarian;
 
 public class LoginTest {
 

@@ -4,12 +4,12 @@
  */
 package rs.ac.bg.fon.sa.ambulanta.repository.db.impl;
 
-import rs.ac.bg.fon.ambulanta.domain.*;
-
 import java.util.List;
 import rs.ac.bg.fon.sa.ambulanta.repository.db.*;
 import java.sql.*;
 import java.util.ArrayList;
+
+import rs.ac.bg.fon.sa.ambulanta.domain.*;
 import rs.ac.bg.fon.sa.ambulanta.operation.*;
 
 /**

@@ -5,12 +5,13 @@
 package rs.ac.bg.fon.sa.ambulanta.form;
 
 
-import rs.ac.bg.fon.ambulanta.domain.*;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
+import rs.ac.bg.fon.sa.ambulanta.domain.*;
 import rs.ac.bg.fon.sa.ambulanta.model.*;
 import rs.ac.bg.fon.sa.ambulanta.threads.*;
 import rs.ac.bg.fon.sa.ambulanta.threads.side.*;
