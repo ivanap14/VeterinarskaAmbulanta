@@ -59,7 +59,7 @@ public class Specialization implements GenericEntity{
 
     public void setCategory(Category category) {
         if (category == null) {
-            throw new IllegalArgumentException("Kategorija mora biti uneta.");
+            throw new NullPointerException("Kategorija mora biti uneta.");
         }
         this.category = category;
     }
@@ -104,10 +104,6 @@ public class Specialization implements GenericEntity{
     return sb.toString();
     }
 
-    @Override
-    public void setId(long id) {
-        this.id=id;
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException {
@@ -129,6 +125,9 @@ public class Specialization implements GenericEntity{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
+    @Override
+    public void setIdFromRS(Long id) {
+        this.id=id;
+    }
     
 }

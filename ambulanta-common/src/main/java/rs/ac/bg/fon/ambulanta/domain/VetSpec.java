@@ -46,21 +46,21 @@ public class VetSpec implements GenericEntity{
 
     public void setVeterinarian(Veterinarian veterinarian) {
         if (veterinarian == null) {
-            throw new IllegalArgumentException("Veterinar mora biti unet.");
+            throw new NullPointerException("Veterinar mora biti unet.");
         }
         this.veterinarian = veterinarian;
     }
 
     public void setSpecialization(Specialization specialization) {
         if (specialization == null) {
-            throw new IllegalArgumentException("Specijalizacija mora biti uneta.");
+            throw new NullPointerException("Specijalizacija mora biti uneta.");
         }
         this.specialization = specialization;
     }
 
     public void setGraduationDate(LocalDate graduationDate) {
         if (graduationDate == null) {
-            throw new IllegalArgumentException("Datum diplomiranja mora biti unet.");
+            throw new NullPointerException("Datum diplomiranja mora biti unet.");
         }
         if (graduationDate.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Datum diplomiranja ne može biti u budućnosti.");
@@ -98,10 +98,6 @@ public class VetSpec implements GenericEntity{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void setId(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) {
@@ -123,7 +119,10 @@ public class VetSpec implements GenericEntity{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
+    @Override
+    public void setIdFromRS(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     
     

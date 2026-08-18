@@ -7,6 +7,7 @@ package rs.ac.bg.fon.ambulanta.domain;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,24 +29,11 @@ public class Intervention implements GenericEntity{
 
     public Intervention() {
     }
-
-    public Intervention(Long id, LocalDate date, String notes, int discountForLoyalty, 
-            int discountForNumberOfServices, double totalAmountWithoutDiscount, 
-            double totalAmountWithDiscount, Veterinarian veterinarian, Animal animal) {
-		setId(id);
-		setDate(date);
-		setNotes(notes);
-		setDiscountForLoyalty(discountForLoyalty);
-		setDiscountForNumberOfServices(discountForNumberOfServices);
-		setTotalAmountWithoutDiscount(totalAmountWithoutDiscount);
-		setTotalAmountWithDiscount(totalAmountWithDiscount);
-		setVeterinarian(veterinarian);
-		setAnimal(animal);
-	}
 	
-	public Intervention(LocalDate date, String notes, int discountForLoyalty, int discountForNumberOfServices, 
+	public Intervention(Long id, LocalDate date, String notes, int discountForLoyalty, int discountForNumberOfServices, 
 	            double totalAmountWithoutDiscount, double totalAmountWithDiscount, 
 	            Veterinarian veterinarian, Animal animal, List<InterventionItem> interventionItems) {
+		setId(id);
 		setDate(date);
 		setNotes(notes);
 		setDiscountForLoyalty(discountForLoyalty);
@@ -103,7 +91,7 @@ public class Intervention implements GenericEntity{
 
     public void setDate(LocalDate date) {
         if (date == null) {
-            throw new IllegalArgumentException("Datum intervencije mora biti unet.");
+            throw new NullPointerException("Datum intervencije mora biti unet.");
         }
         if (date.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("Datum intervencije ne može biti u budućnosti.");
@@ -148,25 +136,20 @@ public class Intervention implements GenericEntity{
 
     public void setVeterinarian(Veterinarian veterinarian) {
         if (veterinarian == null) {
-            throw new IllegalArgumentException("Veterinar mora biti unet.");
+            throw new NullPointerException("Veterinar mora biti unet.");
         }
         this.veterinarian = veterinarian;
     }
 
     public void setAnimal(Animal animal) {
         if (animal == null) {
-            throw new IllegalArgumentException("Životinja mora biti uneta.");
+            throw new NullPointerException("Životinja mora biti uneta.");
         }
         this.animal = animal;
     }
 
     public void setInterventionItems(List<InterventionItem> interventionItems) {
         this.interventionItems = interventionItems;
-    }
-
-    @Override
-    public String toString() {
-        return ""+getId()+" "+getDate();
     }
 
     @Override
@@ -221,10 +204,6 @@ public class Intervention implements GenericEntity{
         return sb.toString();
     }
 
-    @Override
-    public void setId(long id) {
-        this.id=id;
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException {
@@ -234,8 +213,11 @@ public class Intervention implements GenericEntity{
         Animal animal = new Animal(rs.getLong("idAnimal"), rs.getString("a.name"), Species.valueOf(rs.getString("a.species")),
                 rs.getInt("a.yearOfBirth"), Gender.valueOf(rs.getString("a.gender")), owner);
         Veterinarian veterinarian = new Veterinarian(rs.getLong("idVeterinarian"), rs.getString("v.firstname"), rs.getString("v.lastname"), 
-                rs.getDate("v.birthday").toLocalDate(), rs.getString("v.phone"), rs.getString("v.email"));
-        return new Intervention(rs.getLong("i.id"), rs.getDate("i.date").toLocalDate(), rs.getString("i.notes"), rs.getInt("i.discountForLoyalty"), rs.getInt("i.discountForNumberOfServices"), rs.getDouble("i.totalAmountWithoutDiscount"), rs.getDouble("i.totalAmountWithDiscount"), veterinarian, animal);
+                rs.getDate("v.birthday").toLocalDate(), rs.getString("v.phone"), rs.getString("v.email"), null);
+        List<InterventionItem> items = new ArrayList<>();
+        return new Intervention(rs.getLong("i.id"), rs.getDate("i.date").toLocalDate(), rs.getString("i.notes"), 
+        		rs.getInt("i.discountForLoyalty"), rs.getInt("i.discountForNumberOfServices"), rs.getDouble("i.totalAmountWithoutDiscount"), 
+        		rs.getDouble("i.totalAmountWithDiscount"), veterinarian, animal, items);
     }
 
     @Override
@@ -258,6 +240,11 @@ public class Intervention implements GenericEntity{
     @Override
     public String getQueryCondition() {
         return "id="+getId();
+    }
+    
+    @Override
+    public void setIdFromRS(Long id) {
+        this.id=id;
     }
     
 }

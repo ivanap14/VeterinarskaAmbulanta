@@ -39,7 +39,7 @@ public class DbBroker implements DbRepository<GenericEntity>{
             ResultSet rsKey = statement.getGeneratedKeys();
             if(rsKey.next()){
                 Long id = rsKey.getLong(1);
-                entity.setId(id);
+                entity.setIdFromRS(id);
             }
             statement.close();
             rsKey.close();

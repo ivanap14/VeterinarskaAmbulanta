@@ -44,10 +44,12 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
+        txtEmail.setText("admin@gmail.com");
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
+        txtPassword.setText("admin123");
         lblEmail = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
 

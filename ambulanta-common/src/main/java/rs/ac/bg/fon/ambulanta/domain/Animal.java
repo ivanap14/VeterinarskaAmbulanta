@@ -68,8 +68,8 @@ public class Animal implements GenericEntity{
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Ime životinje mora biti uneto.");
         }
-        if (!name.matches("\\p{L}+")) {
-            throw new IllegalArgumentException("Nadimak sme da sadrzi samo slova.");
+        if (name.matches(".*\\d.*")) {
+            throw new IllegalArgumentException("Nadimak ne sme da sadrži brojeve.");
         }
         if (name.length() > 50) {
             throw new IllegalArgumentException("Ime životinje je predugačko.");
@@ -79,7 +79,7 @@ public class Animal implements GenericEntity{
 
     public void setSpecies(Species species) {
         if (species == null) {
-            throw new IllegalArgumentException("Vrsta mora biti uneta.");
+            throw new NullPointerException("Vrsta mora biti uneta.");
         }
         this.species = species;
     }
@@ -99,21 +99,21 @@ public class Animal implements GenericEntity{
 
     public void setGender(Gender gender) {
         if (gender == null) {
-            throw new IllegalArgumentException("Pol mora biti unet.");
+            throw new NullPointerException("Pol mora biti unet.");
         }
         this.gender = gender;
     }
 
     public void setOwner(Owner owner) {
         if (owner == null) {
-            throw new IllegalArgumentException("Vlasnik mora biti unet.");
+            throw new NullPointerException("Vlasnik mora biti unet.");
         }
         this.owner = owner;
     }
 
     @Override
     public String toString() {
-        return ""+getId()+" "+getName()+" "+getSpecies();
+    	return "["+getId()+"] "+getName()+" ("+getSpecies()+")";
     }
 
     @Override
@@ -165,10 +165,6 @@ public class Animal implements GenericEntity{
     return sb.toString();
     }
 
-    @Override
-    public void setId(long id) {
-        this.id=id;
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException {
@@ -198,7 +194,10 @@ public class Animal implements GenericEntity{
         return "id="+getId();
     }
 
-    
+    @Override
+    public void setIdFromRS(Long id) {
+        this.id=id;
+    }
     
     
     

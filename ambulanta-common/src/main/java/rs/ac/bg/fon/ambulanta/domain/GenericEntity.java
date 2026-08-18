@@ -20,7 +20,7 @@ public interface GenericEntity extends Serializable {
 
     public String getInsertValues();
 
-    public void setId(long id);
+    public void setIdFromRS(Long id);
 
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException;
 

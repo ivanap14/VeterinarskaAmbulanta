@@ -58,7 +58,7 @@ public class InterventionItem implements GenericEntity{
 
     public void setIntervention(Intervention intervention) {
         if (intervention == null) {
-            throw new IllegalArgumentException("Intervencija mora biti uneta.");
+            throw new NullPointerException("Intervencija mora biti uneta.");
         }
         this.intervention = intervention;
     }
@@ -93,17 +93,11 @@ public class InterventionItem implements GenericEntity{
 
     public void setService(Service service) {
         if (service == null) {
-            throw new IllegalArgumentException("Usluga mora biti uneta.");
+            throw new NullPointerException("Usluga mora biti uneta.");
         }
         this.service = service;
     }
 
-    
-
-    @Override
-    public String toString() {
-        return "rb=" + rb + ", price=" + price + ", quantity=" + quantity + ", amount=" + amount;
-    }
 
     @Override
     public String getTableName() {
@@ -133,10 +127,6 @@ public class InterventionItem implements GenericEntity{
         return sb.toString();
     }
 
-    @Override
-    public void setId(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException {
@@ -164,4 +154,8 @@ public class InterventionItem implements GenericEntity{
         return "idIntervention=" + intervention.getId();
     }
 
+    @Override
+    public void setIdFromRS(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

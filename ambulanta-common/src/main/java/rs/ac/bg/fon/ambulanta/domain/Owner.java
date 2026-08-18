@@ -113,7 +113,7 @@ public class Owner implements GenericEntity{
 
     public void setLoyaltyCard(Boolean loyaltyCard) {
         if (loyaltyCard == null) {
-            throw new IllegalArgumentException("Podatak o loyalty kartici mora biti unet.");
+            throw new NullPointerException("Podatak o loyalty kartici mora biti unet.");
         }
         this.loyaltyCard = loyaltyCard;
     }
@@ -188,10 +188,6 @@ public class Owner implements GenericEntity{
         return sb.toString();
     }
 
-    @Override
-    public void setId(long id) {
-        this.id=id;
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException {
@@ -221,4 +217,8 @@ public class Owner implements GenericEntity{
         return "id="+getId();
     }
 
+    @Override
+    public void setIdFromRS(Long id) {
+        this.id=id;
+    }
 }

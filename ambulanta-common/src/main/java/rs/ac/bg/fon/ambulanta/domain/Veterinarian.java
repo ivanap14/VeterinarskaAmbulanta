@@ -27,9 +27,8 @@ public class Veterinarian implements GenericEntity{
     public Veterinarian() {
     }
 
-    public Veterinarian(Long id, String firstname, String lastname, LocalDate birthday, String phone, 
-                                                                            String email, String password) {
-        this.id = id;
+    public Veterinarian(Long id, String firstname, String lastname, LocalDate birthday, String phone, String email, String password) {
+        setId(id);
         setFirstname(firstname);
         setLastname(lastname);
         setBirthday(birthday);
@@ -38,20 +37,10 @@ public class Veterinarian implements GenericEntity{
         setPassword(password);
     }
     
-    public Veterinarian(Long id, String firstname, String lastname, LocalDate birthday, String phone, String email) {
-        this.id = id;
-        setFirstname(firstname);
-        setLastname(lastname);
-        setBirthday(birthday);
-        setPhone(phone);
-        setEmail(email);
-    }
-
     public Veterinarian(String email, String password) {
           setEmail(email);
           setPassword(password);
   }
-
 
     public Long getId() {
         return id;
@@ -85,7 +74,7 @@ public class Veterinarian implements GenericEntity{
         this.id = id;
     }
 
-    public void setFirstname(String firstname) {
+        public void setFirstname(String firstname) {
     	if (firstname == null || firstname.isEmpty()) {
             throw new IllegalArgumentException("Ime mora biti uneto.");
         }
@@ -123,7 +112,7 @@ public class Veterinarian implements GenericEntity{
 
     public void setPhone(String phone) {
     	if(phone == null || phone.isEmpty()){
-            throw new IllegalArgumentException("Telefon mora biti unet.");
+            throw new IllegalArgumentException("Nije unet telefon.");
         }
     	if(phone.length() < 9 || phone.length() > 10) {
     		throw new IllegalArgumentException("Telefon mora imati 9 ili 10 cifara");
@@ -136,7 +125,7 @@ public class Veterinarian implements GenericEntity{
 
     public void setEmail(String email)  {
         if(email == null || email.isEmpty()){
-            throw new IllegalArgumentException("Email mora biti unet.");
+            throw new IllegalArgumentException("Nije unet email.");
         }
         if(!email.contains("@")) {
         	throw new IllegalArgumentException("Email nije u ispravnom formatu.");
@@ -148,11 +137,7 @@ public class Veterinarian implements GenericEntity{
     }
 
     public void setPassword(String password)  {
-        if(password == null || password.isEmpty()){
-            throw new IllegalArgumentException("Sifra mora biti uneta.");
-        }
-        
-        if (password.length() < 8 || password.length() > 60) {
+    	if (password!=null && (password.length() < 8 || password.length() > 60)) {
             throw new IllegalArgumentException("Sifra mora imati izmedju 8 i 60 karaktera.");
         }
         this.password = password;
@@ -160,8 +145,32 @@ public class Veterinarian implements GenericEntity{
 
     @Override
     public String toString() {
-        return ""+getId()+" "+getFirstname()+" "+getLastname();
+        return "["+getId()+"] "+getFirstname()+" "+getLastname();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 13 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Veterinarian other = (Veterinarian) obj;
+        return Objects.equals(this.id, other.id);
+    }
+    
+    
 
     @Override
     public String getTableName() {
@@ -169,23 +178,6 @@ public class Veterinarian implements GenericEntity{
     }
 
     @Override
-	public int hashCode() {
-		return Objects.hash(email, password);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Veterinarian other = (Veterinarian) obj;
-		return Objects.equals(email, other.email) && Objects.equals(password, other.password);
-	}
-
-	@Override
     public String getTableAlias() {
         return "";
     }
@@ -200,10 +192,6 @@ public class Veterinarian implements GenericEntity{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public void setId(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException{
@@ -226,8 +214,10 @@ public class Veterinarian implements GenericEntity{
     public String getQueryCondition() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
     
-    
+    @Override
+    public void setIdFromRS(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

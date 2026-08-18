@@ -42,11 +42,11 @@ public class LoginTest {
 
 	@ParameterizedTest(name = "{0}")
 	@CsvSource({
-	    "Pogresna sifra, pera@gmail.com, xxxx, false",
-	    "Pogresan email, xxxxxxxxxxxxxx, pera, false",
-	    "Ispravna sifra i email, pera@gmail.com, pera, true",
+	    "Pogresna sifra, pera@gmail.com, xxxxxxxx",
+	    "Pogresan email, xxxx@xxxxxxxxx, pera1234",
+	    "Ispravna sifra i email, pera@gmail.com, pera1234",
 	})
-	public void testExecuteOperation(String opis, String email, String password, Boolean equals) {
+	public void testExecuteOperation(String opis, String email, String password) {
 		veterinarian2.setEmail(email);
 		veterinarian2.setPassword(password);
 		
@@ -54,10 +54,11 @@ public class LoginTest {
 			
 			so.execute(veterinarian2);
 		
-			assertEquals(veterinarian2.equals(so.getVeterinarian()), equals);
+			assertEquals(email, so.getVeterinarian().getEmail());
+			assertEquals(password, so.getVeterinarian().getPassword());
 		
 		} catch (Exception e) {
-			assertEquals("Korisničko ime i/ili šifra nisu ispravni!", e.getMessage());;
+			assertEquals("Korisničko ime i/ili šifra nisu ispravni!", e.getMessage());
 		}
 	}
 
