@@ -5,9 +5,10 @@
  */
 package rs.ac.bg.fon.sa.ambulanta.threads;
 
-import rs.ac.bg.fon.ambulanta.communication.*;
+import rs.ac.bg.fon.sa.ambulanta.communication.*;
 import rs.ac.bg.fon.sa.ambulanta.controller.*;
-import rs.ac.bg.fon.ambulanta.domain.*;
+import rs.ac.bg.fon.sa.ambulanta.domain.*;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.List;
@@ -62,6 +63,28 @@ public class HandleClientThread extends Thread{
 	                user=vet;
 	                response.setResult(vet);
 	                break;
+	            case GET_ALL_VETERINARIANS:
+                    List<Veterinarian> veterinarians = Controller.getInstance().getAllVeterinarians();
+                    response.setResult(veterinarians);
+                    break;
+                case GET_ALL_ANIMALS:
+                    List<Animal> animals = Controller.getInstance().getAllAnimals();
+                    response.setResult(animals);
+                    break;
+                case GET_ALL_SERVICES:
+                    List<Service> services = Controller.getInstance().getAllServices();
+                    response.setResult(services);
+                    break;
+                case ADD_NEW_INTERVENTION:
+                    Intervention intervention =  (Intervention) request.getArgument();
+                    intervention = Controller.getInstance().addNewIntervention(intervention);
+                    response.setResult(intervention);
+                    break;
+                case EDIT_INTERVENTION:
+                    Intervention intervention1 =  (Intervention) request.getArgument();
+                    intervention1 = Controller.getInstance().editIntervention(intervention1);
+                    response.setResult(intervention1);
+                    break;
                
                 default:
                     throw new AssertionError();
