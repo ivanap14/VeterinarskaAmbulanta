@@ -216,6 +216,15 @@ public class Controller {
         } 
     }
 
-    
+    public Specialization addNewSpecialization(Specialization specialization) throws Exception {
+        Request request = new Request(Operation.ADD_NEW_SPECIALIZATION, specialization);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return  (Specialization) response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
     
 }

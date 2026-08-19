@@ -20,6 +20,7 @@ import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByServic
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByVeterinarianCriteria;
 import rs.ac.bg.fon.sa.ambulanta.operation.owner.GetAllOwners;
 import rs.ac.bg.fon.sa.ambulanta.operation.service.GetAllServices;
+import rs.ac.bg.fon.sa.ambulanta.operation.specialization.AddNewSpecialization;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.GetAllVeterinarians;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;
 
@@ -163,6 +164,14 @@ public class Controller {
         Animal a = ((EditAnimal)operation).getAnimal();
         
         return a;
+    }
+    
+    public Specialization addNewSpecialization(Specialization specialization) throws Exception {
+        AbstractSO operation = new AddNewSpecialization();
+        operation.execute(specialization);
+        Specialization s = ((AddNewSpecialization)operation).getSpecialization();
+        
+        return s;
     }
 }
 

@@ -128,6 +128,11 @@ public class HandleClientThread extends Thread{
                     animal2 = Controller.getInstance().editAnimal(animal2);
                     response.setResult(animal2);
                     break;
+                case ADD_NEW_SPECIALIZATION:
+                    Specialization specialization =  (Specialization) request.getArgument();
+                    specialization = Controller.getInstance().addNewSpecialization(specialization);
+                    response.setResult(specialization);
+                    break;
                 
                
                 default:
