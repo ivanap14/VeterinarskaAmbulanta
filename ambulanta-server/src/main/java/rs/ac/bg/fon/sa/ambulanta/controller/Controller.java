@@ -7,6 +7,8 @@ package rs.ac.bg.fon.sa.ambulanta.controller;
 
 import rs.ac.bg.fon.sa.ambulanta.domain.*;
 import rs.ac.bg.fon.sa.ambulanta.operation.AbstractSO;
+import rs.ac.bg.fon.sa.ambulanta.operation.animal.AddNewAnimal;
+import rs.ac.bg.fon.sa.ambulanta.operation.animal.EditAnimal;
 import rs.ac.bg.fon.sa.ambulanta.operation.animal.GetAllAnimals;
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.AddNewIntervention;
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.EditIntervention;
@@ -16,6 +18,7 @@ import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByAnimal
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByInterventionCriteria;
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByServiceCriteria;
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByVeterinarianCriteria;
+import rs.ac.bg.fon.sa.ambulanta.operation.owner.GetAllOwners;
 import rs.ac.bg.fon.sa.ambulanta.operation.service.GetAllServices;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.GetAllVeterinarians;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;

@@ -660,7 +660,8 @@ public class FrmAnimal extends javax.swing.JDialog {
                 txtEmail.setEditable(false);
                 txtAddress.setEditable(false);
 
-                setSize(460, 680);
+                setSize(460, 700);
+                
         }
     }
 

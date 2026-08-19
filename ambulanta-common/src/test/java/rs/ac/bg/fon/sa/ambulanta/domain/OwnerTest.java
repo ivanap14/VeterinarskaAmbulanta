@@ -268,5 +268,33 @@ class OwnerTest {
 		assertEquals("Sarajevska 39", resultOwner.getAddress());
 	}
 
+	
+	@Test
+	void testHashCode() {
+		Owner o2 = new Owner(1L, "Petar", "Petrovic", "1597536548526", false, "063945612", "petar@gmail.com", "Sarajevska 39");
+		Owner o3 = new Owner(2L, "Mika", "Mikic", "9876543210123", true, "0629876543", "mika@gmail.com", "Knez Mihailova 5");
+
+		assertEquals(o1.hashCode(), o2.hashCode());
+		assertNotEquals(o1.hashCode(), o3.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		Owner o2 = new Owner(1L, "Petar", "Petrovic", "1597536548526", false, "063945612", "petar@gmail.com", "Sarajevska 39");
+		Owner o3 = new Owner(2L, "Mika", "Mikic", "9876543210123", true, "0629876543", "mika@gmail.com", "Knez Mihailova 5");
+
+		assertTrue(o1.equals(o2));
+		assertFalse(o1.equals(o3));
+	}
+
+	@Test
+	void testEqualsNull() {
+		assertFalse(o1.equals(null));
+	}
+
+	@Test
+	void testEqualsInvalidClass() {
+		assertFalse(o1.equals(new String()));
+	}
 
 }
