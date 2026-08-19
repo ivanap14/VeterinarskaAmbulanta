@@ -41,7 +41,7 @@ public class TableModelLoggedInUsers extends AbstractTableModel{
 
         switch (columnIndex) {
             case 0:
-                return veterinarian.getEmail();
+            	return veterinarian.toString()+"  |  email: "+veterinarian.getEmail();
             default:
                 return "n/a";
         }

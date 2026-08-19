@@ -150,7 +150,7 @@ public class FrmLogin extends javax.swing.JFrame {
           Controller.getInstance().setCurrentUser(vet);
           
           this.dispose(); //zatvaranje i oslobadjanje memorije
-          new FrmMain().setVisible(true);
+          new FrmMain1().setVisible(true);
           
     	} catch (Exception ex) {
     		JOptionPane.showMessageDialog(this, ex.getMessage(), "Greska", JOptionPane.ERROR_MESSAGE);

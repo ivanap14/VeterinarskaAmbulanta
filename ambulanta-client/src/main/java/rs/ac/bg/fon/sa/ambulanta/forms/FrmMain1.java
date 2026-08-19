@@ -4,30 +4,38 @@
  */
 package rs.ac.bg.fon.sa.ambulanta.forms;
 
-import rs.ac.bg.fon.sa.ambulanta.controller.*;
-import rs.ac.bg.fon.sa.ambulanta.domain.*;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import rs.ac.bg.fon.sa.ambulanta.controller.*;
+import rs.ac.bg.fon.sa.ambulanta.domain.*;
 import rs.ac.bg.fon.sa.ambulanta.threads.*;
+import java.awt.Dimension;
+import javax.swing.SwingConstants;
+import javax.swing.JMenu;
+import java.awt.Font;
+import javax.swing.JMenuItem;
 
 
 /**
  *
  * @author Korisnik
  */
-public class FrmMain extends javax.swing.JFrame {
+public class FrmMain1 extends javax.swing.JFrame {
     
     private final Veterinarian veterinarian;
 
 
     
-    public FrmMain() throws Exception{
+    public FrmMain1() throws Exception{
         try {
 
         initComponents();
-
+        jLabel1.setIcon(new ImageIcon(getClass().getResource("/image/background1.png")));
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/image/logo.png")).getImage());
+        
         veterinarian = Controller.getInstance().getCurrentUser();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png")).getImage());
         setTitle("PetVet :: " + veterinarian.getFirstname() + " " + veterinarian.getLastname());
         lblVeterinarian.setText("dr. vet. med. "+veterinarian.getFirstname()+" "+veterinarian.getLastname());
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -52,25 +60,22 @@ public class FrmMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel1.setIcon(null);
         jPanel1 = new javax.swing.JPanel();
         lblTime = new javax.swing.JLabel();
         lblDate = new javax.swing.JLabel();
         lblVeterinarian = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuIntervention = new javax.swing.JMenu();
+        menuIntervention.setHorizontalAlignment(SwingConstants.CENTER);
         menuItemNewIntervention = new javax.swing.JMenuItem();
         menuItemEditIntervention = new javax.swing.JMenuItem();
-        menuAnimal = new javax.swing.JMenu();
-        menuItemNewAnimal = new javax.swing.JMenuItem();
         menuSpecialization = new javax.swing.JMenu();
         menuItemNewSpecialization = new javax.swing.JMenuItem();
-        menuItemNewSpecialization1 = new javax.swing.JMenuItem();
-        menuItemNewSpecialization2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/background1.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -109,10 +114,9 @@ public class FrmMain extends javax.swing.JFrame {
         jMenuBar1.setPreferredSize(new java.awt.Dimension(430, 40));
 
         menuIntervention.setText("Intervencija");
-        menuIntervention.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        menuIntervention.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuIntervention.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuIntervention.setPreferredSize(new java.awt.Dimension(110, 30));
+        menuIntervention.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        menuIntervention.setHorizontalTextPosition(SwingConstants.CENTER);
+        menuIntervention.setPreferredSize(new Dimension(110, 30));
 
         menuItemNewIntervention.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemNewIntervention.setText("Kreiraj");
@@ -134,28 +138,11 @@ public class FrmMain extends javax.swing.JFrame {
 
         jMenuBar1.add(menuIntervention);
 
-        menuAnimal.setText("Životinja");
-        menuAnimal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        menuAnimal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuAnimal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuAnimal.setPreferredSize(new java.awt.Dimension(100, 30));
-
-        menuItemNewAnimal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        menuItemNewAnimal.setText("Kreiraj");
-        menuItemNewAnimal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemNewAnimalActionPerformed(evt);
-            }
-        });
-        menuAnimal.add(menuItemNewAnimal);
-
-        jMenuBar1.add(menuAnimal);
-
         menuSpecialization.setText("Specijalizacija");
         menuSpecialization.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        menuSpecialization.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        menuSpecialization.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        menuSpecialization.setPreferredSize(new java.awt.Dimension(120, 30));
+        menuSpecialization.setHorizontalAlignment(SwingConstants.CENTER);
+        menuSpecialization.setHorizontalTextPosition(SwingConstants.CENTER);
+        menuSpecialization.setPreferredSize(new Dimension(120, 30));
 
         menuItemNewSpecialization.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         menuItemNewSpecialization.setText("Unesi");
@@ -164,27 +151,32 @@ public class FrmMain extends javax.swing.JFrame {
                 menuItemNewSpecializationActionPerformed(evt);
             }
         });
+        
+        mnivotinja = new JMenu();
+        mnivotinja.setText("Životinja");
+        mnivotinja.setPreferredSize(new Dimension(90, 30));
+        mnivotinja.setHorizontalTextPosition(SwingConstants.CENTER);
+        mnivotinja.setHorizontalAlignment(SwingConstants.CENTER);
+        mnivotinja.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        jMenuBar1.add(mnivotinja);
+        
+        mntmKreiraj = new JMenuItem();
+        mntmKreiraj.setText("Kreiraj");
+        mntmKreiraj.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        mnivotinja.add(mntmKreiraj);
         menuSpecialization.add(menuItemNewSpecialization);
 
-        menuItemNewSpecialization1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        menuItemNewSpecialization1.setText("Dodeli");
-        menuItemNewSpecialization1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemNewSpecialization1ActionPerformed(evt);
-            }
-        });
-        menuSpecialization.add(menuItemNewSpecialization1);
-
-        menuItemNewSpecialization2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        menuItemNewSpecialization2.setText("Prikaži");
-        menuItemNewSpecialization2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemNewSpecialization2ActionPerformed(evt);
-            }
-        });
-        menuSpecialization.add(menuItemNewSpecialization2);
-
         jMenuBar1.add(menuSpecialization);
+        
+        mntmDodeli = new JMenuItem();
+        mntmDodeli.setText("Dodeli");
+        mntmDodeli.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        menuSpecialization.add(mntmDodeli);
+        
+        menuItemNewSpecialization_2 = new JMenuItem();
+        menuItemNewSpecialization_2.setText("Prikaži");
+        menuItemNewSpecialization_2.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        menuSpecialization.add(menuItemNewSpecialization_2);
 
         setJMenuBar(jMenuBar1);
 
@@ -216,7 +208,7 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemNewInterventionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewInterventionActionPerformed
-        try {
+    	try {
             
             FrmNewIntervention form = new FrmNewIntervention(this,true);
             form.setVisible(true);
@@ -229,25 +221,15 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemNewInterventionActionPerformed
 
     private void menuItemEditInterventionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditInterventionActionPerformed
-        
+       
     }//GEN-LAST:event_menuItemEditInterventionActionPerformed
 
-    private void menuItemNewAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewAnimalActionPerformed
-        
-    }//GEN-LAST:event_menuItemNewAnimalActionPerformed
-
+    
     private void menuItemNewSpecializationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewSpecializationActionPerformed
         
     }//GEN-LAST:event_menuItemNewSpecializationActionPerformed
 
-    private void menuItemNewSpecialization1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewSpecialization1ActionPerformed
-        
-    }//GEN-LAST:event_menuItemNewSpecialization1ActionPerformed
-
-    private void menuItemNewSpecialization2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewSpecialization2ActionPerformed
-        
-    }//GEN-LAST:event_menuItemNewSpecialization2ActionPerformed
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -256,15 +238,15 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblVeterinarian;
-    private javax.swing.JMenu menuAnimal;
     private javax.swing.JMenu menuIntervention;
     private javax.swing.JMenuItem menuItemEditIntervention;
-    private javax.swing.JMenuItem menuItemNewAnimal;
     private javax.swing.JMenuItem menuItemNewIntervention;
     private javax.swing.JMenuItem menuItemNewSpecialization;
-    private javax.swing.JMenuItem menuItemNewSpecialization1;
-    private javax.swing.JMenuItem menuItemNewSpecialization2;
     private javax.swing.JMenu menuSpecialization;
+    private JMenu mnivotinja;
+    private JMenuItem mntmKreiraj;
+    private JMenuItem mntmDodeli;
+    private JMenuItem menuItemNewSpecialization_2;
     // End of variables declaration//GEN-END:variables
 
     
