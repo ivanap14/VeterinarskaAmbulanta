@@ -237,7 +237,8 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemEditInterventionActionPerformed
 
     private void menuItemNewAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewAnimalActionPerformed
-        
+    	FrmAnimal form = new FrmAnimal(this, true,FormMode.FORM_ADD_MODE,null);
+        form.setVisible(true);
     }//GEN-LAST:event_menuItemNewAnimalActionPerformed
 
     private void menuItemNewSpecializationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewSpecializationActionPerformed

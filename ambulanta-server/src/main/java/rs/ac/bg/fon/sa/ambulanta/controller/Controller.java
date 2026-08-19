@@ -137,6 +137,29 @@ public class Controller {
         return interv;
     }
         
-       
+    public List<Owner> getAllOwners() throws Exception {
+        AbstractSO operation = new GetAllOwners();
+        operation.execute(null);
+        List<Owner> owners = ((GetAllOwners)operation).getOwners();
+        
+        return owners;
+    }
+
+
+    public Animal addNewAnimal(Animal animal) throws Exception {
+        AbstractSO operation = new AddNewAnimal();
+        operation.execute(animal);
+        Animal a = ((AddNewAnimal)operation).getAnimal();
+        
+        return a;
+    }
+
+    public Animal editAnimal(Animal animal) throws Exception {
+        AbstractSO operation = new EditAnimal();
+        operation.execute(animal);
+        Animal a = ((EditAnimal)operation).getAnimal();
+        
+        return a;
+    }
 }
 

@@ -183,7 +183,39 @@ public class Controller {
         }
     }
 	
+    public List<Owner> getAllOwners() throws Exception {
+        Request request = new Request(Operation.GET_ALL_OWNERS, null);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Owner>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+    
+    public Animal addNewAnimal(Animal animal) throws Exception {
+        Request request = new Request(Operation.ADD_NEW_ANIMAL, animal);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return  (Animal) response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
 
+    public Animal editAnimal(Animal animal) throws Exception {
+        Request request = new Request(Operation.EDIT_ANIMAL, animal);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return  (Animal) response.getResult();
+        }else{
+            throw response.getException();
+        } 
+    }
 
+    
     
 }
