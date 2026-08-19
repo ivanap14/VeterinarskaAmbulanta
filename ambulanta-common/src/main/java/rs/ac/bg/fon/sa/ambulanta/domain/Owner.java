@@ -6,6 +6,7 @@ package rs.ac.bg.fon.sa.ambulanta.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  *
@@ -221,4 +222,23 @@ public class Owner implements GenericEntity{
     public void setIdFromRS(Long id) {
         this.id=id;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Owner other = (Owner) obj;
+		return Objects.equals(id, other.id);
+	}
+    
+    
 }

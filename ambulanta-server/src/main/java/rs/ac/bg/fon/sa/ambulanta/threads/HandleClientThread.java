@@ -114,6 +114,21 @@ public class HandleClientThread extends Thread{
                     intervention2 = Controller.getInstance().getIntervention(intervention2);
                     response.setResult(intervention2);
                     break;
+                case GET_ALL_OWNERS:
+                    List<Owner> owners = Controller.getInstance().getAllOwners();
+                    response.setResult(owners);
+                    break;
+                case ADD_NEW_ANIMAL:
+                    Animal animal =  (Animal) request.getArgument();
+                    animal = Controller.getInstance().addNewAnimal(animal);
+                    response.setResult(animal);
+                    break;
+                case EDIT_ANIMAL:
+                    Animal animal2 =  (Animal) request.getArgument();
+                    animal2 = Controller.getInstance().editAnimal(animal2);
+                    response.setResult(animal2);
+                    break;
+                
                
                 default:
                     throw new AssertionError();
