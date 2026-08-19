@@ -104,7 +104,7 @@ class EditInterventionTest {
 
 	@Test
 	public void testPreconditionsInterventionDoesNotExist() {
-		Intervention invalidIntervention = new Intervention(999999L, LocalDate.now(), "Nepostojeca intervencija", 10, 5, 1000, 850, veterinarian, animal, new ArrayList<>());
+		Intervention invalidIntervention = new Intervention(0L, LocalDate.now(), "Nepostojeca intervencija", 10, 5, 1000, 850, veterinarian, animal, new ArrayList<>());
 		invalidIntervention.getInterventionItems().add(item);
 
 		assertThrows(Exception.class, () -> so.preconditions(invalidIntervention));

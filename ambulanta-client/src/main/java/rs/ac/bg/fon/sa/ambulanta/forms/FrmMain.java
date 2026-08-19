@@ -6,6 +6,8 @@ package rs.ac.bg.fon.sa.ambulanta.forms;
 
 import rs.ac.bg.fon.sa.ambulanta.controller.*;
 import rs.ac.bg.fon.sa.ambulanta.domain.*;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import rs.ac.bg.fon.sa.ambulanta.threads.*;
@@ -22,22 +24,23 @@ public class FrmMain extends javax.swing.JFrame {
 
     
     public FrmMain() throws Exception{
-        try {
+    	try {
 
-        initComponents();
-
-        veterinarian = Controller.getInstance().getCurrentUser();
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png")).getImage());
-        setTitle("PetVet :: " + veterinarian.getFirstname() + " " + veterinarian.getLastname());
-        lblVeterinarian.setText("dr. vet. med. "+veterinarian.getFirstname()+" "+veterinarian.getLastname());
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        DateTimeThread threadDT = new DateTimeThread(lblDate, lblTime);
-        threadDT.start();
-        
-        } catch (Exception ex) {
-            throw new Exception("Ne može da se otvori glavna forma i meni.");
-        }
+            initComponents();
+            jLabel1.setIcon(new ImageIcon(getClass().getResource("/image/background1.png")));
+            setIconImage(new javax.swing.ImageIcon(getClass().getResource("/image/logo.png")).getImage());
+            
+            veterinarian = Controller.getInstance().getCurrentUser();
+            setTitle("PetVet :: " + veterinarian.getFirstname() + " " + veterinarian.getLastname());
+            lblVeterinarian.setText("dr. vet. med. "+veterinarian.getFirstname()+" "+veterinarian.getLastname());
+            setExtendedState(JFrame.MAXIMIZED_BOTH);
+            
+            DateTimeThread threadDT = new DateTimeThread(lblDate, lblTime);
+            threadDT.start();
+            
+            } catch (Exception ex) {
+                throw new Exception("Ne može da se otvori glavna forma i meni.");
+            }
     }
 
    
@@ -70,7 +73,7 @@ public class FrmMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/background1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background1.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -229,7 +232,8 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemNewInterventionActionPerformed
 
     private void menuItemEditInterventionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditInterventionActionPerformed
-        
+    	FrmFindIntervention form = new FrmFindIntervention(this, true);
+        form.setVisible(true);
     }//GEN-LAST:event_menuItemEditInterventionActionPerformed
 
     private void menuItemNewAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewAnimalActionPerformed

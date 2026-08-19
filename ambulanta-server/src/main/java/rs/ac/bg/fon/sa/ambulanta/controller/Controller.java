@@ -10,6 +10,12 @@ import rs.ac.bg.fon.sa.ambulanta.operation.AbstractSO;
 import rs.ac.bg.fon.sa.ambulanta.operation.animal.GetAllAnimals;
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.AddNewIntervention;
 import rs.ac.bg.fon.sa.ambulanta.operation.intervention.EditIntervention;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetAllInterventions;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetIntervention;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByAnimalCriteria;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByInterventionCriteria;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByServiceCriteria;
+import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByVeterinarianCriteria;
 import rs.ac.bg.fon.sa.ambulanta.operation.service.GetAllServices;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.GetAllVeterinarians;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;
@@ -83,7 +89,53 @@ public class Controller {
         return interv;
     }
 
-    
+	public List<Intervention> getInterventionsByInterventionCriteria(String criteria) throws Exception {
+        AbstractSO operation = new GetInterventionsByInterventionCriteria();
+        operation.execute(criteria);
+        List<Intervention> interventions = ((GetInterventionsByInterventionCriteria)operation).getInterventions();
+        
+        return interventions;
+    }
+
+    public List<Intervention> getInterventionsByVeterinarianCriteria(String criteria) throws Exception {
+        AbstractSO operation = new GetInterventionsByVeterinarianCriteria();
+        operation.execute(criteria);
+        List<Intervention> interventions = ((GetInterventionsByVeterinarianCriteria)operation).getInterventions();
+        
+        return interventions;
+    }
+
+    public List<Intervention> getInterventionsByAnimalCriteria(String criteria) throws Exception {
+        AbstractSO operation = new GetInterventionsByAnimalCriteria();
+        operation.execute(criteria);
+        List<Intervention> interventions = ((GetInterventionsByAnimalCriteria)operation).getInterventions();
+        
+        return interventions;
+    }
+
+    public List<Intervention> getInterventionsByServiceCriteria(String criteria) throws Exception {
+        AbstractSO operation = new GetInterventionsByServiceCriteria();
+        operation.execute(criteria);
+        List<Intervention> interventions = ((GetInterventionsByServiceCriteria)operation).getInterventions();
+        
+        return interventions;
+    }
+
+    public List<Intervention> getAllInterventions() throws Exception {
+        AbstractSO operation = new GetAllInterventions();
+        operation.execute(null);
+        List<Intervention> interventions = ((GetAllInterventions)operation).getInterventions();
+        
+        return interventions;
+    }
+
+    public Intervention getIntervention(Intervention intervention) throws Exception {
+        AbstractSO operation = new GetIntervention();
+        operation.execute(intervention);
+        Intervention interv = ((GetIntervention)operation).getIntervention();
+        
+        return interv;
+    }
         
        
 }
