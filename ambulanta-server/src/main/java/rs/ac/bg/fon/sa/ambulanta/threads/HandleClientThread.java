@@ -85,6 +85,35 @@ public class HandleClientThread extends Thread{
                     intervention1 = Controller.getInstance().editIntervention(intervention1);
                     response.setResult(intervention1);
                     break;
+                case GET_INTERVENTIONS_BY_INTERVENTION_CRITERIA:
+                    String criteria1 = (String) request.getArgument();
+                    List<Intervention> interventions1 = Controller.getInstance().getInterventionsByInterventionCriteria(criteria1);
+                    response.setResult(interventions1);
+                    break;
+                case GET_INTERVENTIONS_BY_VETERINARIAN_CRITERIA:
+                    String criteria2 = (String) request.getArgument();
+                    List<Intervention> interventions2 = Controller.getInstance().getInterventionsByVeterinarianCriteria(criteria2);
+                    response.setResult(interventions2);
+                    break;
+                case GET_INTERVENTIONS_BY_ANIMAL_CRITERIA:
+                    String criteria3 = (String) request.getArgument();
+                    List<Intervention> interventions3 = Controller.getInstance().getInterventionsByAnimalCriteria(criteria3);
+                    response.setResult(interventions3);
+                    break;
+                case GET_INTERVENTIONS_BY_SERVICE_CRITERIA:
+                    String criteria4 = (String) request.getArgument();
+                    List<Intervention> interventions4 = Controller.getInstance().getInterventionsByServiceCriteria(criteria4);
+                    response.setResult(interventions4);
+                    break;
+                case GET_ALL_INTERVENTIONS:
+                    List<Intervention> interventions5 = Controller.getInstance().getAllInterventions();
+                    response.setResult(interventions5);
+                    break;
+                case GET_INTERVENTION:
+                    Intervention intervention2 =  (Intervention) request.getArgument();
+                    intervention2 = Controller.getInstance().getIntervention(intervention2);
+                    response.setResult(intervention2);
+                    break;
                
                 default:
                     throw new AssertionError();
