@@ -195,7 +195,8 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemNewInterventionActionPerformed
 
     private void menuItemEditInterventionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEditInterventionActionPerformed
-       
+    	FrmFindIntervention form = new FrmFindIntervention(this, true);
+        form.setVisible(true);
     }//GEN-LAST:event_menuItemEditInterventionActionPerformed
 
     

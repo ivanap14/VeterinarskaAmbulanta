@@ -117,6 +117,71 @@ public class Controller {
         } 
 	}
 
+	public List<Intervention> getInterventionsByInterventionCriteria(String criteria) throws Exception {
+        Request request = new Request(Operation.GET_INTERVENTIONS_BY_INTERVENTION_CRITERIA, criteria);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Intervention>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+
+	public List<Intervention> getInterventionsByVeterinarianCriteria(String criteria) throws Exception {
+        Request request = new Request(Operation.GET_INTERVENTIONS_BY_VETERINARIAN_CRITERIA, criteria);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Intervention>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+
+    public List<Intervention> getInterventionsByAnimalCriteria(String criteria) throws Exception {
+        Request request = new Request(Operation.GET_INTERVENTIONS_BY_ANIMAL_CRITERIA, criteria);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Intervention>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+
+    public List<Intervention> getInterventionsByServiceCriteria(String criteria) throws Exception {
+        Request request = new Request(Operation.GET_INTERVENTIONS_BY_SERVICE_CRITERIA, criteria);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Intervention>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+
+    public List<Intervention> getAllInterventions() throws Exception {
+        Request request = new Request(Operation.GET_ALL_INTERVENTIONS, null);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Intervention>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+
+    public Intervention getIntervention(Intervention intervention) throws Exception {
+        Request request = new Request(Operation.GET_INTERVENTION, intervention);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return  (Intervention) response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
 	
 
 

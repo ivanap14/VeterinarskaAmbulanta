@@ -24,6 +24,7 @@ public class FrmViewEditIntervention extends javax.swing.JDialog {
     
     int mode;
     Intervention intervention;
+    EditInterventionThread editThread;
     
     public FrmViewEditIntervention(Frame parent, boolean modal, int mode, Intervention intervention) throws Exception{
         super(parent, modal);
@@ -35,13 +36,15 @@ public class FrmViewEditIntervention extends javax.swing.JDialog {
         
         prepareView();// priprema formu u zavisnosti od moda
         
+        editThread = new EditInterventionThread(this);
+        editThread.start();
         
         setLocationRelativeTo(null);
     }
 
     @SuppressWarnings(value = "unchecked")
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -571,26 +574,64 @@ public class FrmViewEditIntervention extends javax.swing.JDialog {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {                                         
         this.dispose();
-    }//GEN-LAST:event_btnCloseActionPerformed
+    }                                        
 
-    private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddServiceActionPerformed
-       
-    }//GEN-LAST:event_btnAddServiceActionPerformed
+    private void btnAddServiceActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        try {
+            if(cbService.getSelectedIndex()!=-1){
+            Service service = (Service) cbService.getSelectedItem();
+            TableModelInterventionItem tmi = (TableModelInterventionItem) tblServices.getModel();
+            tmi.addInterventionItem(intervention, service, intervention.getAnimal());
+            } 
+            else throw new Exception("Izaberite uslugu iz padajućeg menija!");
+               
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
+        }
+    }                                             
 
-    private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteServiceActionPerformed
+    private void btnDeleteServiceActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        try {
+            int rowSelected = tblServices.getSelectedRow();
+            TableModelInterventionItem tmi = (TableModelInterventionItem) tblServices.getModel();
+            if(rowSelected>=0){
+                tmi.removeInterventionItem(rowSelected, intervention.getAnimal());
+            } else {
+                throw new Exception("Niste selektovali uslugu!");
+            }
         
-    }//GEN-LAST:event_btnDeleteServiceActionPerformed
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Greška", JOptionPane.ERROR_MESSAGE);
+        }
+    }                                                
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-       
-    }//GEN-LAST:event_btnSaveActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {                                        
+       try{
+            intervention.setNotes(txtNotes.getText());
+
+            Intervention intervent = Controller.getInstance().editIntervention(intervention);
+
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio intervenciju ["+intervent.getId()+"]", "Informacija", JOptionPane.INFORMATION_MESSAGE);
+
+            this.setVisible(false);
+
+            FrmViewEditIntervention viewInterventionForm = new FrmViewEditIntervention( (Frame)this.getParent(),true,FormMode.FORM_VIEW_MODE, intervent);
+            viewInterventionForm.setVisible(true);
+        
+            
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne može da zapamti intervenciju", "Greška", JOptionPane.ERROR_MESSAGE);
+//            ex.printStackTrace();
+        }
+    }                                       
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton btnAddService;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDeleteService;
@@ -660,7 +701,7 @@ public class FrmViewEditIntervention extends javax.swing.JDialog {
     private javax.swing.JTextField txtTotalAmountWithDiscount;
     private javax.swing.JTextField txtTotalAmountWithoutDiscount;
     private javax.swing.JTextField txtYearOfBirthAnimal;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 
     private void prepareView() throws Exception{
         try {
@@ -784,6 +825,45 @@ public class FrmViewEditIntervention extends javax.swing.JDialog {
     }
 
 
-   
+    public void updateVeterinarianAnimalOwner() {
+            Veterinarian veterinarian = (Veterinarian) cbVeterinarian.getSelectedItem();
+            if(veterinarian!=null){
+                intervention.setVeterinarian(veterinarian);//!!!!!!
+                txtIdVeterinarian.setText(veterinarian.getId().toString());
+                txtFirstnameVeterinarian.setText(veterinarian.getFirstname());
+                txtLastnameVeterinarian.setText(veterinarian.getLastname());
+                txtBirthdayVeterinarian.setText(veterinarian.getBirthday().toString());
+                txtPhoneVeterinarian.setText(veterinarian.getPhone());
+            }
+        
+            Animal animal = (Animal) cbAnimal.getSelectedItem();
+            if(animal!=null){
+                intervention.setAnimal(animal);//!!!!!!
+                txtIdAnimal.setText(animal.getId().toString());
+                txtNameAnimal.setText(animal.getName());
+                txtSpeciesAnimal.setText(animal.getSpecies().toString());
+                txtYearOfBirthAnimal.setText(animal.getYearOfBirth()+"");
+                txtGenderAnimal.setText(animal.getGender().toString());
+                Owner owner = animal.getOwner();
+                txtJmbgOwner.setText(owner.getJmbg());
+                txtNameOwner.setText(owner.getFirstname()+" "+owner.getLastname());
+                if(owner.getLoyaltyCard()==true){
+                        chkBoxLoyalityCardOwner.setSelected(true);
+                }
+                txtPhoneOwner.setText(owner.getPhone());
+                txtEmailOwner.setText(owner.getEmail());
+                txtAddressOwner.setText(owner.getAddress());
+            }
+            
+            TableModelInterventionItem itm = (TableModelInterventionItem) tblServices.getModel();
+            itm.calculateTotals(animal);
+    }
+
+    public void populateTextFieldsForDiscountAndTotals() {
+        txtDiscountForLoyalty.setText(intervention.getDiscountForLoyalty()+"");
+        txtDiscountForNumberOfServices.setText(intervention.getDiscountForNumberOfServices()+"");
+        txtTotalAmountWithoutDiscount.setText(intervention.getTotalAmountWithoutDiscount()+"");
+        txtTotalAmountWithDiscount.setText(intervention.getTotalAmountWithDiscount()+"");
+    }
     
 }
