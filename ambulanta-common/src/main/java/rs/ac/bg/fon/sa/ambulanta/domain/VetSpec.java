@@ -5,6 +5,7 @@
 package rs.ac.bg.fon.sa.ambulanta.domain;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
@@ -78,35 +79,52 @@ public class VetSpec implements GenericEntity{
         this.institution = institution;
     }
 
-    @Override
+        @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "vetspec";
     }
-    
+
     @Override
     public String getTableAlias() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "";
     }
 
     @Override
     public String getColumnNamesForInsert() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "idVeterinarian, idSpecialization, graduationDate, institution";
     }
 
     @Override
     public String getInsertValues() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(veterinarian.getId())
+          .append(",")
+          .append(specialization.getId())
+          .append(",")
+          .append("'").append(graduationDate).append("'")
+          .append(",")
+          .append("'").append(institution).append("'");
+
+        return sb.toString();
     }
 
 
     @Override
-    public GenericEntity getEntityFromResultSet(ResultSet rs) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public GenericEntity getEntityFromResultSet(ResultSet rs) throws SQLException {
+        Veterinarian veterinarian = new Veterinarian();
+        veterinarian.setId(rs.getLong("idVeterinarian"));
+        Specialization specialization = new Specialization();
+        specialization.setId(rs.getLong("idSpecialization"));
+        specialization.setName(rs.getString("name"));
+        specialization.setCategory(Category.valueOf(rs.getString("category")));
+        return new VetSpec(veterinarian, specialization, rs.getDate("graduationDate").toLocalDate(), rs.getString("institution"));
     }
 
     @Override
     public String getJoinQuery() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "INNER JOIN veterinarian v ON v.id=idVeterinarian INNER JOIN specialization s ON s.id=idSpecialization";
     }
 
     @Override

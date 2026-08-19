@@ -227,4 +227,37 @@ public class Controller {
         }
     }
     
+    public List<Specialization> getAllSpecializations() throws Exception {
+        Request request = new Request(Operation.GET_ALL_SPECIALIZATIONS, null);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<Specialization>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+
+    public VetSpec addNewVetSpec(VetSpec vetSpec) throws Exception {
+        Request request = new Request(Operation.ADD_NEW_VETSPEC, vetSpec);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return  (VetSpec) response.getResult();
+        }else{
+            throw response.getException();
+        } 
+    }
+
+    public List<VetSpec> getVetSpecsByVeterinarian(Veterinarian vet) throws Exception {
+        Request request = new Request(Operation.GET_VETSPECS_BY_VETERINARIAN, vet);
+        sender.send(request);
+        Response response = (Response) receiver.receive();
+        if(response.getException()==null){
+            return (List<VetSpec>)response.getResult();
+        }else{
+            throw response.getException();
+        }
+    }
+    
 }

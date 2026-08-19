@@ -21,8 +21,11 @@ import rs.ac.bg.fon.sa.ambulanta.operation.intervention.GetInterventionsByVeteri
 import rs.ac.bg.fon.sa.ambulanta.operation.owner.GetAllOwners;
 import rs.ac.bg.fon.sa.ambulanta.operation.service.GetAllServices;
 import rs.ac.bg.fon.sa.ambulanta.operation.specialization.AddNewSpecialization;
+import rs.ac.bg.fon.sa.ambulanta.operation.specialization.GetAllSpecializations;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.GetAllVeterinarians;
 import rs.ac.bg.fon.sa.ambulanta.operation.veterinarian.Login;
+import rs.ac.bg.fon.sa.ambulanta.operation.vetspec.AddNewVetSpec;
+import rs.ac.bg.fon.sa.ambulanta.operation.vetspec.GetVetSpecsByVeterinarian;
 
 import java.util.List;
 
@@ -172,6 +175,30 @@ public class Controller {
         Specialization s = ((AddNewSpecialization)operation).getSpecialization();
         
         return s;
+    }
+    
+    public List<Specialization> getAllSpecializations() throws Exception {
+        AbstractSO operation = new GetAllSpecializations();
+        operation.execute(null);
+        List<Specialization> specializations = ((GetAllSpecializations)operation).getSpecializations();
+        
+        return specializations;
+    }
+
+    public VetSpec addNewVetSpec(VetSpec vetSpec) throws Exception {
+        AbstractSO operation = new AddNewVetSpec();
+        operation.execute(vetSpec);
+        VetSpec s = ((AddNewVetSpec)operation).getVetSpec();
+        
+        return s;
+    }
+
+    public List<VetSpec> getVetSpecsByVeterinarian(Veterinarian vet) throws Exception {
+        AbstractSO operation = new GetVetSpecsByVeterinarian();
+        operation.execute(vet);
+        List<VetSpec> vs = ((GetVetSpecsByVeterinarian)operation).getVetSpecs();
+        
+        return vs;
     }
 }
 

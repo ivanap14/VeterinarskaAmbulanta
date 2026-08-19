@@ -247,11 +247,13 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemNewSpecializationActionPerformed
 
     private void menuItemNewSpecialization1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewSpecialization1ActionPerformed
-        
+    	FrmAddSpecialization form = new FrmAddSpecialization(this, true);
+        form.setVisible(true); 
     }//GEN-LAST:event_menuItemNewSpecialization1ActionPerformed
 
     private void menuItemNewSpecialization2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemNewSpecialization2ActionPerformed
-        
+    	FrmViewSpecializations form = new FrmViewSpecializations(this, true);
+        form.setVisible(true);
     }//GEN-LAST:event_menuItemNewSpecialization2ActionPerformed
 
 

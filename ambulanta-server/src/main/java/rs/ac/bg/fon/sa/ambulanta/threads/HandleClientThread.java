@@ -133,6 +133,21 @@ public class HandleClientThread extends Thread{
                     specialization = Controller.getInstance().addNewSpecialization(specialization);
                     response.setResult(specialization);
                     break;
+                case GET_ALL_SPECIALIZATIONS:
+                    List<Specialization> specializations = Controller.getInstance().getAllSpecializations();
+                    response.setResult(specializations);
+                    break;
+                
+                case ADD_NEW_VETSPEC:
+                    VetSpec vetSpec =  (VetSpec) request.getArgument();
+                    vetSpec = Controller.getInstance().addNewVetSpec(vetSpec);
+                    response.setResult(vetSpec);
+                    break;
+                case  GET_VETSPECS_BY_VETERINARIAN:
+                    Veterinarian vet1 = (Veterinarian) request.getArgument();
+                    List<VetSpec> vetSpec1 = Controller.getInstance().getVetSpecsByVeterinarian(vet1);
+                    response.setResult(vetSpec1);
+                    break;
                 
                
                 default:
