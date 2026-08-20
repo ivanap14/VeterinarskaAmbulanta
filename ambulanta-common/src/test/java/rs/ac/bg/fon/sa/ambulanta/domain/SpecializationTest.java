@@ -137,6 +137,38 @@ class SpecializationTest {
 		assertEquals(category, resultSpecialization.getCategory());
 		assertEquals("Opis specijalizacije", resultSpecialization.getDescription());
 	}
+	
+	@Test
+	void testHashCode() {
+		Specialization s2 = new Specialization(1L, "Hirurgija", Category.HIRURSKA, "Opis specijalizacije");
+		Specialization s3 = new Specialization(2L, "Dermatologija", Category.DIJAGNOSTICKA, "Drugi opis");
 
+		assertEquals(sp1.hashCode(), s2.hashCode());
+		assertNotEquals(sp1.hashCode(), s3.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		Specialization s2 = new Specialization(1L, "Hirurgija", Category.HIRURSKA, "Opis specijalizacije");
+		Specialization s3 = new Specialization(2L, "Dermatologija", Category.DIJAGNOSTICKA, "Drugi opis");
+
+		assertTrue(sp1.equals(s2));
+		assertFalse(sp1.equals(s3));
+	}
+
+	@Test
+	void testEqualsNull() {
+		assertFalse(sp1.equals(null));
+	}
+
+	@Test
+	void testEqualsInvalidClass() {
+		assertFalse(sp1.equals(new String()));
+	}
+
+	@Test
+	void testEqualsSameInstance() {
+		assertTrue(sp1.equals(sp1));
+	}
 
 }

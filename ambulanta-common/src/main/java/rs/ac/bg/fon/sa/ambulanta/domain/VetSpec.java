@@ -7,6 +7,7 @@ package rs.ac.bg.fon.sa.ambulanta.domain;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
@@ -134,7 +135,7 @@ public class VetSpec implements GenericEntity{
 
     @Override
     public String getQueryCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    	return "idVeterinarian=" + veterinarian.getId() + " AND idSpecialization=" + specialization.getId();
     }
 
     @Override
@@ -142,6 +143,24 @@ public class VetSpec implements GenericEntity{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(specialization, veterinarian);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		VetSpec other = (VetSpec) obj;
+		return Objects.equals(specialization, other.specialization) && Objects.equals(veterinarian, other.veterinarian);
+	}
+
+    
     
     
     

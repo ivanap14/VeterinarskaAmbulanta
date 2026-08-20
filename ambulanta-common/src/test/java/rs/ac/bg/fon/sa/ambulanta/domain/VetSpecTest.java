@@ -109,5 +109,47 @@ class VetSpecTest {
 		assertEquals("Fakultet veterinarske medicine", vs.getInstitution());
 	}
 
+	@Test
+	void testHashCode() {
+		Veterinarian v2 = new Veterinarian(1L, "Marko", "Markovic", LocalDate.of(1990, 5, 20), "0641234567", "marko@gmail.com", "sifra123");
+		Specialization s2 = new Specialization(1L, "Ortopedska hirurgija", Category.HIRURSKA, "Opis specijalizacije");
+		VetSpec vs2 = new VetSpec(v2, s2, LocalDate.of(2018, 9, 1), "Neki drugi fakultet");
+
+		Veterinarian v3 = new Veterinarian(2L, "Jovan", "Jovanovic", LocalDate.of(1985, 3, 10), "0651234567", "jovan@gmail.com", "sifra456");
+		Specialization s3 = new Specialization(2L, "Interna medicina", Category.OPSTA, "Drugi opis");
+		VetSpec vs3 = new VetSpec(v3, s3, LocalDate.of(2019, 1, 1), "Treći fakultet");
+
+		assertEquals(vs1.hashCode(), vs2.hashCode());
+		assertNotEquals(vs1.hashCode(), vs3.hashCode());
+	}
+
+	@Test
+	void testEqualsObject() {
+		Veterinarian v2 = new Veterinarian(1L, "Marko", "Markovic", LocalDate.of(1990, 5, 20), "0641234567", "marko@gmail.com", "sifra123");
+		Specialization s2 = new Specialization(1L, "Ortopedska hirurgija", Category.HIRURSKA, "Opis specijalizacije");
+		VetSpec vs2 = new VetSpec(v2, s2, LocalDate.of(2018, 9, 1), "Neki drugi fakultet");
+
+		Veterinarian v3 = new Veterinarian(2L, "Jovan", "Jovanovic", LocalDate.of(1985, 3, 10), "0651234567", "jovan@gmail.com", "sifra456");
+		Specialization s3 = new Specialization(2L, "Interna medicina", Category.OPSTA, "Drugi opis");
+		VetSpec vs3 = new VetSpec(v3, s3, LocalDate.of(2019, 1, 1), "Treći fakultet");
+
+		assertTrue(vs1.equals(vs2));
+		assertFalse(vs1.equals(vs3));
+	}
+
+	@Test
+	void testEqualsNull() {
+		assertFalse(vs1.equals(null));
+	}
+
+	@Test
+	void testEqualsInvalidClass() {
+		assertFalse(vs1.equals(new String()));
+	}
+
+	@Test
+	void testEqualsSameInstance() {
+		assertTrue(vs1.equals(vs1));
+	}
 
 }

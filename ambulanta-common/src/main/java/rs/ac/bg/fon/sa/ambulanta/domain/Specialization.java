@@ -6,6 +6,7 @@ package rs.ac.bg.fon.sa.ambulanta.domain;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  *
@@ -122,12 +123,31 @@ public class Specialization implements GenericEntity{
 
     @Override
     public String getQueryCondition() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "id=" + getId();
     }
 
     @Override
     public void setIdFromRS(Long id) {
         this.id=id;
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Specialization other = (Specialization) obj;
+		return Objects.equals(id, other.id);
+	}
+    
+    
     
 }
