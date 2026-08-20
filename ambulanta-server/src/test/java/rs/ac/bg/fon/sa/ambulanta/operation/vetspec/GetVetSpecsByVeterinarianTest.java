@@ -29,7 +29,7 @@ class GetVetSpecsByVeterinarianTest {
 		dbBroker = new DbBroker();
 		uniqueSuffix = String.valueOf(System.currentTimeMillis());
 
-		veterinarian = new Veterinarian(null, "Marko", "Markovic", LocalDate.of(1990, 5, 20), "0641234567", "marko" + uniqueSuffix + "@getvetspec.com", "sifra123");
+		veterinarian = new Veterinarian(null, "Marko", "Markovic", LocalDate.of(1990, 5, 20), "0641234567", "marko" + uniqueSuffix + "@gmail.com", "sifra123");
 		veterinarian = (Veterinarian) dbBroker.add(veterinarian);
 
 		specialization = new Specialization(null, "TestSpec_" + uniqueSuffix, Category.HIRURSKA, "Opis specijalizacije");
