@@ -12,16 +12,66 @@ import com.google.gson.JsonObject;
 
 import rs.ac.bg.fon.sa.ambulanta.domain.*;
 
-
+/**
+ * Klasa zadužena za generisanje PDF računa za intervenciju putem
+ * eksternog PDFMonkey servisa.
+ *
+ * Podaci o intervenciji (veterinar, vlasnik, životinja, stavke usluga,
+ * popusti i ukupni iznosi) se serijalizuju u JSON i šalju PDFMonkey API-ju
+ * radi generisanja dokumenta na osnovu unapred definisanog šablona.
+ * Generisanje dokumenta na strani PDFMonkey servera je asinhrono, pa se
+ * prvo pokreće generisanje startGenerating(Intervention), a
+ * zatim se, nakon kraćeg čekanja, proverava status i preuzima link za
+ * preuzimanje gotovog dokumenta getUrl(String).
+ *
+ * @author Korisnik
+ */
 public class InvoicePdfMonkeyGenerator {
-	 private static final String API_KEY = "_7XmdsBcaJGUFcuJmTxM";
-	    private static final String TEMPLATE_ID = "7F8A07CD-43CF-4710-B081-71A27B48C8A1";
-	    private static final String API_URL = "https://api.pdfmonkey.io/api/v1/documents";
+		/**
+     	* API ključ za autentifikaciju na PDFMonkey servisu.
+     	*/
+		private static final String API_KEY = "_7XmdsBcaJGUFcuJmTxM";
+		/**
+         * Identifikator PDFMonkey šablona koji se koristi za generisanje
+         * računa.
+         */
+		private static final String TEMPLATE_ID = "7F8A07CD-43CF-4710-B081-71A27B48C8A1";
+		/**
+         * URL PDFMonkey API-ja za rad sa dokumentima.
+         */
+		private static final String API_URL = "https://api.pdfmonkey.io/api/v1/documents";
 
+		/**
+         * HTTP klijent koji se koristi za slanje zahteva ka PDFMonkey API-ju.
+         */
 	    private final HttpClient client = HttpClient.newHttpClient();
+	    
+	    /**
+         * Gson instanca koja se koristi za (de)serijalizaciju JSON podataka.
+         */
 	    private final Gson gson = new Gson();
 
-	    /** Kreira dokument na PDFMonkey serveru i vraća njegov ID (generisanje traje par sekundi). */
+	    /**
+         * Kreira novi dokument (račun) na PDFMonkey serveru na osnovu
+         * podataka prosleđene intervencije i identifikatora unapred
+         * definisanog šablona.
+         *
+         * Podaci o intervenciji (broj računa, datum, veterinar, vlasnik,
+         * životinja, stavke usluga sa cenama i količinama, popusti i
+         * ukupni iznosi, napomena) se pakuju u JSON payload i šalju kao
+         * POST zahtev PDFMonkey API-ju. Generisanje dokumenta na strani
+         * servera traje izvesno vreme (par sekundi), pa nakon poziva ove
+         * metode dokument još uvek ne mora biti spreman za preuzimanje —
+         * za to se koristi metoda getUrl(String).
+         *
+         * @param intervention Intervencija na osnovu koje se generiše
+         * PDF račun. Ne sme biti null. Potrebno je da poseduje popunjene
+         * podatke o veterinaru, životinji, vlasniku i stavkama intervencije.
+         * @return identifikator dokumenta kreiranog na PDFMonkey serveru,
+         * koji se koristi za kasniju proveru statusa i preuzimanje dokumenta
+         * @throws Exception Ako slanje zahteva ka PDFMonkey API-ju ne uspe,
+         * ili ako server ne vrati status 201 (kreiran) kao odgovor.
+         */
 	    public String startGenerating(Intervention intervention) throws Exception {
 	        JsonObject payload = new JsonObject();
 	        payload.addProperty("brojRacuna", intervention.getId());
@@ -81,7 +131,22 @@ public class InvoicePdfMonkeyGenerator {
 	        throw new RuntimeException("Greška pri generisanju PDF-a: " + response.body());
 	    }
 
-	    /** Proverava status i vraća download_url kada je dokument gotov. Zove se posle kratkog čekanja. */
+	    /**
+         * Proverava trenutni status dokumenta sa prosleđenim identifikatorom
+         * na PDFMonkey serveru i, ukoliko je generisanje uspešno završeno,
+         * vraća link za njegovo preuzimanje.
+         *
+         * Poziva se nakon poziva metode startGenerating(Intervention)
+         * i kratkog čekanja, s obzirom na to da generisanje dokumenta na serveru nije trenutno.
+         *
+         * @param documentId Identifikator dokumenta dobijen prilikom
+         * pokretanja generisanja (rezultat metode startGenerating(Intervention)).
+         * @return link za preuzimanje gotovog PDF dokumenta, ili null
+         * ukoliko dokument još uvek nije uspešno generisan (status različit
+         * od "success")
+         * @throws Exception Ako slanje zahteva ka PDFMonkey API-ju ili
+         * parsiranje odgovora ne uspe.
+         */
 	    public String getUrl(String documentId) throws Exception {
 	        HttpRequest request = HttpRequest.newBuilder()
 	                .uri(URI.create(API_URL + "/" + documentId))
