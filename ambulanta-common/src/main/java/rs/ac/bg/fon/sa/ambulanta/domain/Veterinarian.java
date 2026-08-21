@@ -12,21 +12,73 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Predstavlja veterinara koji radi u ambulanti.
+ *
+ * Svaki veterinar ima id, ime, prezime, datum rođenja, broj telefona,
+ * email adresu i šifru za prijavu.
+ *
+ * Klasa implementira interfejs GenericEntity, čime je omogućeno njeno
+ * korišćenje u opštim generičkim operacijama nad bazom.
  *
  * @author Korisnik
+ * @version 1.0
  */
 public class Veterinarian implements GenericEntity{
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate birthday;
-    private String phone;
-    private String email;
-    private String password;
+	/**
+     * Jedinstveni identifikator veterinara.
+     */
+	private Long id;
+    
+	/**
+     * Ime veterinara.
+     */
+	private String firstname;
+    
+	/**
+     * Prezime veterinara.
+     */
+	private String lastname;
+    
+	/**
+     * Datum rođenja veterinara.
+     */
+	private LocalDate birthday;
+    
+	/**
+     * Broj telefona veterinara.
+     */
+	private String phone;
+    
+	/**
+     * Email adresa veterinara.
+     */
+	private String email;
+    
+	/**
+     * Šifra veterinara za prijavu.
+     */
+	private String password;
 
+	/**
+     * Kreira objekat klase Veterinarian (novog veterinara) sa null vrednostima atributa.
+     */
     public Veterinarian() {
     }
 
+    /**
+     * Kreira objekat klase Veterinarian (novog veterinara) sa unetim vrednostima atributa.
+     *
+     * Poziva set metodu za svaki parametar uz logičku kontrolu za parametre firstname, lastname,
+     * birthday, phone, email, password.
+     *
+     * @param id Jedinstveni identifikator veterinara.
+     * @param firstname Ime veterinara. Ne sme biti null niti prazno. Ne sme imati više od 50 karaktera. Sme da sadrži samo slova.
+     * @param lastname Prezime veterinara. Ne sme biti null niti prazno. Ne sme imati više od 50 karaktera. Sme da sadrži samo slova.
+     * @param birthday Datum rođenja veterinara. Ne sme biti null niti u budućnosti.
+     * @param phone Broj telefona veterinara. Mora imati 9 ili 10 cifara.
+     * @param email Email adresa veterinara. Mora sadržati znak @ i ne sme biti duža od 60 karaktera.
+     * @param password Šifra veterinara. Ako je uneta, mora imati između 8 i 60 karaktera.
+     */
     public Veterinarian(Long id, String firstname, String lastname, LocalDate birthday, String phone, String email, String password) {
         setId(id);
         setFirstname(firstname);
@@ -37,44 +89,98 @@ public class Veterinarian implements GenericEntity{
         setPassword(password);
     }
     
+    /**
+    * Kreira objekat klase Veterinarian sa unetim email-om i šifrom, namenjen prijavi veterinara.
+    *
+    * Poziva set metodu za svaki parametar uz logičku kontrolu.
+    *
+    * @param email Email adresa veterinara. Mora sadržati znak @ i ne sme biti duža od 60 karaktera.
+    * @param password Šifra veterinara. Ako je uneta, mora imati između 8 i 60 karaktera.
+    */
     public Veterinarian(String email, String password) {
           setEmail(email);
           setPassword(password);
-  }
+    }
 
+    /**
+     * Vraća jedinstveni identifikator veterinara.
+     *
+     * @return ID veterinara
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Vraća ime veterinara.
+     *
+     * @return ime veterinara
+     */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+     * Vraća prezime veterinara.
+     *
+     * @return prezime veterinara
+     */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+     * Vraća datum rođenja veterinara.
+     *
+     * @return datum rođenja veterinara
+     */
     public LocalDate getBirthday() {
         return birthday;
     }
 
+    /**
+     * Vraća broj telefona veterinara.
+     *
+     * @return broj telefona veterinara
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Vraća email adresu veterinara.
+     *
+     * @return email adresa veterinara
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Vraća šifru veterinara.
+     *
+     * @return šifra veterinara
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Postavlja id veterinara na unetu vrednost.
+     *
+     * @param id Jedinstveni identifikator veterinara.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
-        public void setFirstname(String firstname) {
+    /**
+     * Postavlja ime veterinara na unetu vrednost.
+     *
+     * @param firstname Ime veterinara.
+     * @throws java.lang.IllegalArgumentException Ako je uneto ime null ili prazno. Ako je ime duže od 50 karaktera. Ako ime sadrži karakter koji nije slovo.
+     */
+    public void setFirstname(String firstname) {
     	if (firstname == null || firstname.isEmpty()) {
             throw new IllegalArgumentException("Ime mora biti uneto.");
         }
@@ -87,6 +193,12 @@ public class Veterinarian implements GenericEntity{
         this.firstname = firstname;
     }
 
+    /**
+     * Postavlja prezime veterinara na unetu vrednost.
+     *
+     * @param lastname Prezime veterinara.
+     * @throws java.lang.IllegalArgumentException Ako je uneto prezime null ili prazno. Ako je prezime duže od 50 karaktera. Ako prezime sadrži karakter koji nije slovo.
+     */
     public void setLastname(String lastname) {
     	if (lastname == null || lastname.isEmpty()) {
             throw new IllegalArgumentException("Prezime mora biti uneto.");
@@ -100,6 +212,12 @@ public class Veterinarian implements GenericEntity{
         this.lastname = lastname;
     }
 
+    /**
+     * Postavlja datum rođenja veterinara na unetu vrednost.
+     *
+     * @param birthday Datum rođenja veterinara.
+     * @throws java.lang.IllegalArgumentException Ako je unet datum rođenja null. Ako je datum rođenja u budućnosti.
+     */
     public void setBirthday(LocalDate birthday) {
     	if (birthday == null) {
             throw new IllegalArgumentException("Datum rodjenja mora biti unet.");
@@ -110,6 +228,12 @@ public class Veterinarian implements GenericEntity{
         this.birthday = birthday;
     }
 
+    /**
+     * Postavlja broj telefona veterinara na unetu vrednost.
+     *
+     * @param phone Broj telefona veterinara.
+     * @throws java.lang.IllegalArgumentException Ako je unet telefon null ili prazan. Ako telefon nema 9 ili 10 karaktera. Ako telefon sadrži karakter koji nije cifra.
+     */
     public void setPhone(String phone) {
     	if(phone == null || phone.isEmpty()){
             throw new IllegalArgumentException("Nije unet telefon.");
@@ -123,6 +247,12 @@ public class Veterinarian implements GenericEntity{
         this.phone = phone;
     }
 
+    /**
+     * Postavlja email adresu veterinara na unetu vrednost.
+     *
+     * @param email Email adresa veterinara.
+     * @throws java.lang.IllegalArgumentException Ako je unet email null ili prazan. Ako email ne sadrži znak @. Ako je email duži od 60 karaktera.
+     */
     public void setEmail(String email)  {
         if(email == null || email.isEmpty()){
             throw new IllegalArgumentException("Nije unet email.");
@@ -136,6 +266,12 @@ public class Veterinarian implements GenericEntity{
         this.email = email;
     }
 
+    /**
+     * Postavlja šifru veterinara na unetu vrednost.
+     *
+     * @param password Šifra veterinara.
+     * @throws java.lang.IllegalArgumentException Ako uneta šifra nije null i ima manje od 8 ili više od 60 karaktera.
+     */
     public void setPassword(String password)  {
     	if (password!=null && (password.length() < 8 || password.length() > 60)) {
             throw new IllegalArgumentException("Sifra mora imati izmedju 8 i 60 karaktera.");
@@ -143,11 +279,23 @@ public class Veterinarian implements GenericEntity{
         this.password = password;
     }
 
+    /**
+     * Vraća String sa id-em, imenom i prezimenom veterinara.
+     *
+     * @return osnovni podaci o veterinaru u formatu "[id] ime prezime"
+     */
     @Override
     public String toString() {
         return "["+getId()+"] "+getFirstname()+" "+getLastname();
     }
 
+    /**
+     * Generiše hash kod za objekat klase Veterinarian.
+     *
+     * Hash kod se izračunava na osnovu jedinstvenog identifikatora (id).
+     *
+     * @return celobrojna vrednost hash koda
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -155,6 +303,17 @@ public class Veterinarian implements GenericEntity{
         return hash;
     }
 
+    /**
+     * Poredi dva veterinara po id-u.
+     *
+     * @param obj Drugi veterinar sa kojim se poredi.
+     * @return
+     * <ul>
+     * <li><b>true</b> - ako oba objekta klase Veterinarian imaju isti id ili su na istoj adresi</li>
+     * <li><b>false</b> - ako je drugi objekat null, ako je druge klase ili
+     * ako objekti nemaju isti id.</li>
+     * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

@@ -12,20 +12,60 @@ import java.util.Objects;
 import rs.ac.bg.fon.sa.ambulanta.domain.Owner;
 
 /**
+ *Predstavlja životinju nad kojom se vrši intervencija.
  *
+ *Svaka životinja ima id, nadimak, vrstu, godinu rođenja, pol, vlasnika.
+ *
+ *Klasa implementira interfejs GenericEntity, čime je omogućeno njeno
+ * korišćenje u opštim generičkim operacijama nad bazom.
+ * 
  * @author Korisnik
+ * @version 1.0
  */
 public class Animal implements GenericEntity{
+	/**
+     * Jedinstveni identifikator životinje.
+     */
     private Long id;
+    /**
+     * Nadimak životinje.
+     */
     private String name;
+    /**
+     * Biološka vrsta životinje.
+     */
     private Species species;
+    /**
+     * Godina rođenja životinje.
+     */
     private int yearOfBirth;
+    /**
+     * Pol životinje.
+     */
     private Gender gender;
+    /**
+     * Vlasnik životinje.
+     */
     private Owner owner;
 
+    /**
+     * Kreira objekat klase Animal (novu životinju) sa null vrednostima atributa.  
+     */
     public Animal() {
     }
 
+    /**
+     * Kreira objekat klase Animal (novu životinju) sa unetim vrednostima atributa.  
+     * 
+     * Poziva set metodu za svaki parametar uz logičku kontrolu za parametre name, species, yearOfBirth, gender, owner
+     *
+     *@param id Jedinstveni identifikator životinje.
+     *@param name Nadimak životinje. Ne sme biti null niti prazno. Ne sme da sadrži brojeve. Ne sme da ima više od 50 karaktera.
+     *@param species Biološka vrsta životinje. Ne sme biti null.
+     *@param yearOfBirth Godina rođenja životinje. Moguće biti 0-nepoznato ili četvorocifren broj. Ne sme biti negativan broj niti godina u budućnoszi.
+     *@param gender Pol životinje. Ne sme biti null.
+     *@param owner Vlasnik životinje. Ne sme biti null.
+     */
     public Animal(Long id, String name, Species species, int yearOfBirth, 
                                                    Gender gender, Owner owner) {
         setId(id);
@@ -36,34 +76,75 @@ public class Animal implements GenericEntity{
         setOwner(owner);
     }
 
+    /**
+    * Vraća jedinstveni identifikator životinje.
+    * 
+    * @return ID životinje
+    */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Vraća nadimak životinje.
+     * 
+     * @return nadimak životinje
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Vraća biološku vrstu životinje.
+     * 
+     * @return vrsta životinje
+     */
     public Species getSpecies() {
         return species;
     }
 
+    /**
+     * Vraća godinu rođenja životinje.
+     * 
+     * @return godina rođenja
+     */
     public int getYearOfBirth() {
         return yearOfBirth;
     }
 
+    /**
+     * Vraća pol životinje.
+     * 
+     * @return pol životinje
+     */
     public Gender getGender() {
         return gender;
     }
 
+    /**
+     * Vraća vlasnika životinje.
+     * 
+     * @return vlasnik životinje
+     */
     public Owner getOwner() {
         return owner;
     }
 
+    /**
+     * Postavlja id životinje na unetu vrednost.
+     * 
+     * @param id Jedinstveni identifikator životinje.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Postavlja nadimak životinje na unetu vrednost.
+     * 
+     * @param name Nadimak životinje.
+     * @throws java.lang.IllegalArgumentException Ako je unet nadimak null ili prazan. Ako nadimak sadrži broj. Ako je nadimak duži od 50 karaktera.
+     */
     public void setName(String name) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Ime životinje mora biti uneto.");
@@ -77,6 +158,12 @@ public class Animal implements GenericEntity{
         this.name = name;
     }
 
+    /**
+     * Postavlja vrstu životinje na unetu vrednost.
+     * 
+     * @param species Vrsta životinje.
+     * @throws java.lang.NullPointerException Ako je uneta vrsta null.
+     */
     public void setSpecies(Species species) {
         if (species == null) {
             throw new NullPointerException("Vrsta mora biti uneta.");
@@ -84,6 +171,13 @@ public class Animal implements GenericEntity{
         this.species = species;
     }
 
+    /**
+     * Postavlja godinu rođenja životinje na unetu vrednost.
+     * 
+     * @param yearOfBirth Godina rođenja životinje.
+     * @throws java.lang.IllegalArgumentException Ako je uneta godina rođenja negativna.
+     * Ako je uneta godina rođenja nije 0 ili četvorocifren broj. Ako je uneta godina rođenja u budućnosti.
+     */
     public void setYearOfBirth(int yearOfBirth) {
         if (yearOfBirth < 0) {
             throw new IllegalArgumentException("Godina rođenja mora biti pozitivan broj.");
@@ -97,6 +191,13 @@ public class Animal implements GenericEntity{
         this.yearOfBirth = yearOfBirth;
     }
 
+    /**
+     * Postavlja pol životinje na unetu vrednost.
+     * 
+     * @param gender Pol životinje.
+     * @throws java.lang.NullPointerException Ako je unet pol null.
+     * 
+     */
     public void setGender(Gender gender) {
         if (gender == null) {
             throw new NullPointerException("Pol mora biti unet.");
@@ -104,6 +205,13 @@ public class Animal implements GenericEntity{
         this.gender = gender;
     }
 
+    /**
+     * Postavlja vlasnika životinje na unetu vrednost.
+     * 
+     * @param owner Vlasnik životinje.
+     * @throws java.lang.NullPointerException Ako je unet vlasnik null.
+     * 
+     */
     public void setOwner(Owner owner) {
         if (owner == null) {
             throw new NullPointerException("Vlasnik mora biti unet.");
@@ -111,11 +219,24 @@ public class Animal implements GenericEntity{
         this.owner = owner;
     }
 
+    /**
+     * Vraća String sa id-em, nadimkom i vrstom životinje.
+     * 
+     * @return osnovni podaci o životinji u formatu "[id] nadimak (vrsta)"
+     * 
+     */
     @Override
     public String toString() {
     	return "["+getId()+"] "+getName()+" ("+getSpecies()+")";
     }
 
+    /**
+     * Generiše hash kod za objekat klase Animal.
+     * 
+     * Hash kod se izračunava  na osnovu jedinstvenog identifikatora (id).
+     *
+     * @return celobrojna vrednost hash koda
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -123,6 +244,17 @@ public class Animal implements GenericEntity{
         return hash;
     }
 
+    /**
+     * Poredi dve životinje po id-u
+     * 
+     * @param obj Druga životinja sa kojom se poredi.
+     * @return
+     * <ul>
+     * <li><b>true</b> - ako oba objekta klase Animal imaju isti id ili su na istoj adresi</li>
+     * <li><b>false</b> - ako je drugi objekat null, ako je druge klase ili
+	 * ako objekti nemaju isti id.</li>
+     * </ul>
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
