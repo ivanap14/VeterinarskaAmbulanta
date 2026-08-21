@@ -7,13 +7,32 @@ package rs.ac.bg.fon.sa.ambulanta.domain;
 import java.io.Serializable;
 
 /**
+ *Predstavlja kategoriju specijalizacije. 
+ *
+ *Uzima jednu od 5 mogućih vrednosti.
  *
  * @author Korisnik
+ * @version 1.0
  */
 public enum Category implements Serializable{
-    OPSTA,
+	/**
+     * Opšta medicina.
+     */
+	OPSTA,
+	/**
+     * Klinička medicina.
+     */
     KLINICKA,
+    /**
+     * Hirurgija.
+     */
     HIRURSKA,
+    /**
+     * Anesteziologija.
+     */
     ANESTEZIOLOSKA,
+    /**
+     * Dijagnostika i laboratorijske analize.
+     */
     DIJAGNOSTICKA
 }
